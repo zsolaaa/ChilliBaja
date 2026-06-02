@@ -1352,10 +1352,18 @@ window.addEventListener('scroll', function(){
 }, {passive:true});
 
 // ════════════════════════════════════════════════
+// ════════════════════════════════════════════════
 // INIT
 // ════════════════════════════════════════════════
 renderGrid('all');
 updateCartUI();
+// Deep-link: webshop.html#product-id → open detail
+(function() {
+  var hash = window.location.hash.replace('#', '');
+  if (hash && PRODUCTS.find(function(x){ return x.id === hash; })) {
+    openDetail(hash);
+  }
+})();
 </script>
 </body>
 </html>
