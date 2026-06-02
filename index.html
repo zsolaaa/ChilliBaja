@@ -238,11 +238,39 @@
   .hero-line:nth-child(3) { transition-delay: 0.21s; }
   .hero-line:nth-child(4) { transition-delay: 0.29s; }
 
-  /* ── Product card stagger via CSS ─────────────────────
-     30-80ms stagger keeps group entry feeling cohesive.    */
+  /* ── Staggered grid reveal ──────────────────────────────
+     Each card slides in from its own direction with a spring
+     cubic-bezier. .stagger-item replaces .fade-up on grids.  */
+  .stagger-item {
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* Default: slide up */
+  .stagger-item { transform: translateY(40px); }
+  /* First child: from left */
+  .stagger-item:nth-child(3n+1) { transform: translateX(-32px) translateY(24px); }
+  /* Second child: from bottom (stronger) */
+  .stagger-item:nth-child(3n+2) { transform: translateY(52px) scale(0.96); }
+  /* Third child: from right */
+  .stagger-item:nth-child(3n+3) { transform: translateX(32px) translateY(24px); }
+
+  .stagger-item.visible {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  /* Stagger delays — each item 80ms later */
+  .stagger-item:nth-child(1)  { transition-delay:  0ms;  }
+  .stagger-item:nth-child(2)  { transition-delay: 80ms;  }
+  .stagger-item:nth-child(3)  { transition-delay: 160ms; }
+  .stagger-item:nth-child(4)  { transition-delay: 80ms;  }
+  .stagger-item:nth-child(5)  { transition-delay: 160ms; }
+  .stagger-item:nth-child(6)  { transition-delay: 240ms; }
+
+  /* Legacy product-card stagger (kept for safety) */
   .product-card:nth-child(1).visible { transition-delay: 0ms;   }
-  .product-card:nth-child(2).visible { transition-delay: 60ms;  }
-  .product-card:nth-child(3).visible { transition-delay: 120ms; }
+  .product-card:nth-child(2).visible { transition-delay: 80ms;  }
+  .product-card:nth-child(3).visible { transition-delay: 160ms; }
 
   /* ── Hover: nav links — color only, no opacity fade ──── */
   #site-header a, #site-header button {
@@ -473,7 +501,7 @@ tailwind.config = {
   <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
     <!-- ── Card 1: Füstös Fenevad ── -->
-    <article class="product-card group bg-surface-container-low rounded-2xl p-6 inner-rim ember-glow relative overflow-hidden fade-up">
+    <article class="product-card stagger-item group bg-surface-container-low rounded-2xl p-6 inner-rim ember-glow relative overflow-hidden">
       <div class="absolute top-4 right-4">
         <span class="bg-surface-container border border-outline-variant/25 text-on-surface-variant px-3 py-1 rounded-full font-label-caps text-[10px] uppercase tracking-widest">Smoky</span>
       </div>
@@ -510,7 +538,7 @@ tailwind.config = {
     </article>
 
     <!-- ── Card 2: Hajnali Harag — featured ── -->
-    <article class="product-card group rounded-2xl p-6 inner-rim ember-glow-strong relative overflow-hidden fade-up delay-1" style="background:linear-gradient(155deg,#1f1210 0%,#1e1d1d 60%);border:1px solid rgba(255,87,34,0.14);">
+    <article class="product-card stagger-item group rounded-2xl p-6 inner-rim ember-glow-strong relative overflow-hidden" style="background:linear-gradient(155deg,#1f1210 0%,#1e1d1d 60%);border:1px solid rgba(255,87,34,0.14);">
       <div class="absolute top-4 right-4">
         <span class="gradient-fire text-on-primary-container px-3 py-1 rounded-full font-label-caps text-[10px] uppercase tracking-widest">Intense</span>
       </div>
@@ -548,7 +576,7 @@ tailwind.config = {
     </article>
 
     <!-- ── Card 3: Mézes Méreg ── -->
-    <article class="product-card group bg-surface-container-low rounded-2xl p-6 inner-rim ember-glow relative overflow-hidden fade-up delay-2">
+    <article class="product-card stagger-item group bg-surface-container-low rounded-2xl p-6 inner-rim ember-glow relative overflow-hidden">
       <div class="absolute top-4 right-4">
         <span class="bg-surface-container border border-outline-variant/25 text-on-surface-variant px-3 py-1 rounded-full font-label-caps text-[10px] uppercase tracking-widest">Sweet Heat</span>
       </div>
@@ -649,7 +677,7 @@ tailwind.config = {
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <blockquote class="bg-surface-container rounded-2xl p-8 border border-outline-variant/10 flex flex-col fade-up">
+    <blockquote class="stagger-item bg-surface-container rounded-2xl p-8 border border-outline-variant/10 flex flex-col">
       <span class="material-symbols-outlined text-primary/35 text-[32px] mb-5 leading-none" style="font-variation-settings:'FILL' 1;">format_quote</span>
       <p class="font-body-lg text-on-surface-variant italic leading-relaxed flex-1">"A Füstös Fenevad az új kedvencem. Nem csak csíp, hanem tényleg íze is van. Érezni rajta a gondos odafigyelést."</p>
       <footer class="mt-6 pt-5 border-t border-outline-variant/15">
@@ -658,7 +686,7 @@ tailwind.config = {
       </footer>
     </blockquote>
 
-    <blockquote class="testimonial-featured rounded-2xl p-8 flex flex-col relative overflow-hidden fade-up delay-1">
+    <blockquote class="stagger-item testimonial-featured rounded-2xl p-8 flex flex-col relative overflow-hidden">
       <div class="absolute top-0 right-0 w-36 h-36 bg-primary/5 blur-3xl rounded-full pointer-events-none"></div>
       <span class="material-symbols-outlined text-primary text-[32px] mb-5 leading-none" style="font-variation-settings:'FILL' 1;">format_quote</span>
       <p class="font-body-lg text-on-surface italic leading-relaxed flex-1">"Végre egy magyar chili, ami nem csak a brutális erőről szól, hanem a gasztronómiai élményről is. A Mézes Méreg zseniális!"</p>
@@ -668,7 +696,7 @@ tailwind.config = {
       </footer>
     </blockquote>
 
-    <blockquote class="bg-surface-container rounded-2xl p-8 border border-outline-variant/10 flex flex-col fade-up delay-2">
+    <blockquote class="stagger-item bg-surface-container rounded-2xl p-8 border border-outline-variant/10 flex flex-col">
       <span class="material-symbols-outlined text-primary/35 text-[32px] mb-5 leading-none" style="font-variation-settings:'FILL' 1;">format_quote</span>
       <p class="font-body-lg text-on-surface-variant italic leading-relaxed flex-1">"A kiszállítás gyors volt, a csomagolás prémium. A Hajnali Harag tényleg odaver. Azóta is rendszeresen rendelem."</p>
       <footer class="mt-6 pt-5 border-t border-outline-variant/15">
@@ -980,7 +1008,7 @@ tailwind.config = {
     }
   }, { passive: true });
 
-  // ── Fade-up observer ──────────────────────────
+  // ── Fade-up + stagger observer ────────────────
   requestAnimationFrame(function () {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -989,8 +1017,8 @@ tailwind.config = {
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
-    document.querySelectorAll('.fade-up').forEach(function (el) { io.observe(el); });
+    }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
+    document.querySelectorAll('.fade-up, .stagger-item').forEach(function (el) { io.observe(el); });
   });
 
   // ── Heat bars ─────────────────────────────────
