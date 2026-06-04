@@ -49,6 +49,7 @@
     transition: transform 0.35s var(--ease-drawer);
     display: flex; flex-direction: column;
     overflow: hidden;
+    overscroll-behavior: contain;
   }
   #cart-drawer.open { pointer-events: auto; }
   #cart-drawer.open #cart-overlay { background: rgba(0,0,0,0.55); }
@@ -259,7 +260,7 @@ tailwind.config = {
       <div class="flex items-center justify-between pt-1">
         <div>
           <p class="text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">Összesen</p>
-          <p id="drawer-total" class="text-on-surface font-bold text-[22px]" style="font-family:Literata,serif">0 Ft</p>
+          <p id="drawer-total" class="text-on-surface font-bold text-[22px] tabular-nums" style="font-family:Literata,serif">0 Ft</p>
         </div>
         <button id="checkout-btn" class="btn-press px-7 py-3.5 rounded-full gradient-fire text-on-primary-container hover:brightness-110 hover:shadow-[0_0_24px_rgba(255,87,34,0.4)]" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">
           Tovább a fizetéshez
@@ -367,19 +368,19 @@ tailwind.config = {
       <div class="border-t border-outline-variant/15 pt-4 space-y-1.5">
         <div class="flex justify-between text-[14px] text-on-surface-variant">
           <span>Részösszeg</span>
-          <span id="summary-subtotal">0 Ft</span>
+          <span id="summary-subtotal" class="tabular-nums">0 Ft</span>
         </div>
         <div class="flex justify-between text-[14px] text-on-surface-variant">
           <span>Szállítás (GLS)</span>
-          <span id="summary-shipping">2 680 Ft</span>
+          <span id="summary-shipping" class="tabular-nums">2 680 Ft</span>
         </div>
         <div id="summary-cod-wrap" class="hidden flex justify-between text-[14px] text-on-surface-variant">
           <span>Utánvét díj</span>
-          <span id="summary-cod">350 Ft</span>
+          <span id="summary-cod" class="tabular-nums">350 Ft</span>
         </div>
         <div class="flex justify-between text-[16px] font-bold text-on-surface pt-1">
           <span>Összesen</span>
-          <span id="summary-total">0 Ft</span>
+          <span id="summary-total" class="tabular-nums">0 Ft</span>
         </div>
       </div>
     </div>

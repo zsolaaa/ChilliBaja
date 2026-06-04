@@ -3,12 +3,21 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="theme-color" content="#131313"/>
+<meta name="description" content="Chili Baja webshop – rendelj kézműves chili szószokat és fűszerkeverékeket közvetlenül a termelőtől."/>
+<meta property="og:title" content="Chilli Baja – Webshop"/>
+<meta property="og:description" content="Kézműves chili szószok és fűszerkeverékek Bajáról."/>
+<meta property="og:image" content="chilik.webp"/>
+<meta property="og:type" content="website"/>
 <title>Chilli Baja – Webshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,700;0,800;1,400&family=Work+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; }
+  :root { color-scheme: dark; }
   .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 48; user-select:none; }
   .gradient-fire { background: linear-gradient(135deg,#ff5722 0%,#ff8a65 100%); }
   .inner-rim { box-shadow: inset 1px 1px 0 rgba(255,255,255,0.05), inset -1px -1px 0 rgba(0,0,0,0.15); }
@@ -207,17 +216,17 @@ tailwind.config = {
 <div id="detail-view" class="pt-24 pb-20 px-gutter max-w-container-max mx-auto"></div>
 
 <!-- ═══════════════════════════════ CART DRAWER ═══ -->
-<div id="cart-drawer" role="dialog" aria-label="Kosár" aria-modal="true">
+<div id="cart-drawer" role="dialog" aria-labelledby="cart-drawer-title" aria-modal="true">
   <div id="cart-overlay"></div>
   <div id="cart-panel">
     <!-- Header -->
     <div class="flex items-center justify-between px-6 py-5 border-b border-outline-variant/20 shrink-0">
       <div class="flex items-center gap-3">
         <span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings:'FILL' 1;">shopping_bag</span>
-        <span style="font-family:Literata,serif;font-size:20px;font-weight:700" class="text-on-surface">Kosár</span>
+        <span id="cart-drawer-title" style="font-family:Literata,serif;font-size:20px;font-weight:700" class="text-on-surface">Kosár</span>
         <span id="drawer-count" class="text-on-surface-variant text-[13px]"></span>
       </div>
-      <button id="cart-close" class="btn-press w-9 h-9 rounded-full border border-outline-variant/25 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/35 transition-colors duration-150">
+      <button id="cart-close" aria-label="Kosár bezárása" class="btn-press w-9 h-9 rounded-full border border-outline-variant/25 flex items-center justify-center text-on-surface-variant hover:text-primary hover:border-primary/35 transition-colors duration-150">
         <span class="material-symbols-outlined text-[18px]">close</span>
       </button>
     </div>
@@ -250,7 +259,7 @@ tailwind.config = {
       <div class="flex items-center justify-between pt-1">
         <div>
           <p class="text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">Összesen</p>
-          <p id="drawer-total" class="text-on-surface font-bold text-[22px]" style="font-family:Literata,serif">0 Ft</p>
+          <p id="drawer-total" class="text-on-surface font-bold text-[22px] tabular-nums" style="font-family:Literata,serif">0 Ft</p>
         </div>
         <button id="checkout-btn" class="btn-press px-7 py-3.5 rounded-full gradient-fire text-on-primary-container hover:brightness-110 hover:shadow-[0_0_24px_rgba(255,87,34,0.4)]" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">
           Tovább a fizetéshez
@@ -288,16 +297,16 @@ tailwind.config = {
       </div>
       <div>
         <label for="email">E-mail cím</label>
-        <input id="email" class="field" type="email" placeholder="pelda@email.hu" autocomplete="email" required/>
+        <input id="email" class="field" type="email" placeholder="pelda@email.hu" autocomplete="email" spellcheck="false" required/>
       </div>
       <div>
         <label for="phone">Telefonszám</label>
-        <input id="phone" class="field" type="tel" placeholder="+36 30 123 4567" autocomplete="tel" required/>
+        <input id="phone" class="field" type="tel" inputmode="tel" placeholder="+36 30 123 4567" autocomplete="tel" required/>
       </div>
       <div class="grid grid-cols-3 gap-5">
         <div>
           <label for="zip">Irányítószám</label>
-          <input id="zip" class="field" type="text" placeholder="6500" maxlength="4" pattern="[0-9]{4}" required/>
+          <input id="zip" class="field" type="text" inputmode="numeric" placeholder="6500" maxlength="4" pattern="[0-9]{4}" autocomplete="postal-code" required/>
         </div>
         <div class="col-span-2">
           <label for="city">Város</label>
@@ -324,13 +333,12 @@ tailwind.config = {
 
     <div class="space-y-3 mb-8">
       <label class="pay-option">
-        <input type="radio" name="payment" value="card" checked/>
+        <input type="radio" name="payment" value="email" checked/>
         <span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings:'FILL' 1;">credit_card</span>
         <div>
-          <p class="text-on-surface font-medium text-[15px]">Bankkártyás fizetés</p>
-          <p class="text-on-surface-variant text-[13px]">SimplePay — biztonságos online fizetés</p>
+          <p class="text-on-surface font-medium text-[15px]">E-mailes rendelés</p>
+          <p class="text-on-surface-variant text-[13px]">A rendelést e-mailben küldheti el nekünk</p>
         </div>
-        <img src="https://simplepartner.hu/PaymentService/Fizetesi_tajekoztato.pdf" alt="" class="ml-auto h-6 opacity-60" onerror="this.style.display='none'"/>
       </label>
 
       <label class="pay-option">
@@ -359,15 +367,19 @@ tailwind.config = {
       <div class="border-t border-outline-variant/15 pt-4 space-y-1.5">
         <div class="flex justify-between text-[14px] text-on-surface-variant">
           <span>Részösszeg</span>
-          <span id="summary-subtotal">0 Ft</span>
+          <span id="summary-subtotal" class="tabular-nums">0 Ft</span>
         </div>
         <div class="flex justify-between text-[14px] text-on-surface-variant">
           <span>Szállítás (GLS)</span>
-          <span id="summary-shipping">2 680 Ft</span>
+          <span id="summary-shipping" class="tabular-nums">2 680 Ft</span>
+        </div>
+        <div id="summary-cod-wrap" class="hidden flex justify-between text-[14px] text-on-surface-variant">
+          <span>Utánvét díj</span>
+          <span id="summary-cod" class="tabular-nums">350 Ft</span>
         </div>
         <div class="flex justify-between text-[16px] font-bold text-on-surface pt-1">
           <span>Összesen</span>
-          <span id="summary-total">0 Ft</span>
+          <span id="summary-total" class="tabular-nums">0 Ft</span>
         </div>
       </div>
     </div>
@@ -388,11 +400,11 @@ tailwind.config = {
   <div class="w-20 h-20 rounded-full gradient-fire flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(255,87,34,0.4)]">
     <span class="material-symbols-outlined text-on-primary-container text-[40px]" style="font-variation-settings:'FILL' 1;">check</span>
   </div>
-  <h2 style="font-family:Literata,serif;font-size:36px;font-weight:700" class="text-on-surface mb-4">Rendelés leadva!</h2>
+  <h2 style="font-family:Literata,serif;font-size:36px;font-weight:700" class="text-on-surface mb-4">E-mail piszkozat elkészült</h2>
   <p class="text-on-surface-variant text-[17px] leading-relaxed mb-3">
-    Köszönjük a rendelést! E-mailben visszaigazolást küldünk a <span id="confirm-email" class="text-primary font-medium"></span> címre.
+    Kérjük, küldje el a megnyílt e-mailt, hogy a rendelés beérkezzen hozzánk. Visszaigazolást erre a címre küldünk: <span id="confirm-email" class="text-primary font-medium"></span>.
   </p>
-  <p class="text-on-surface-variant text-[15px] mb-10">Feldolgozási idő: 2–3 munkanap. A GLS futár értesít a szállítás napján.</p>
+  <p class="text-on-surface-variant text-[15px] mb-10">A kosarat addig megőrizzük, amíg folytatja a vásárlást vagy frissíti az oldalt.</p>
 
   <div id="confirm-summary" class="bg-surface-container rounded-2xl p-6 border border-outline-variant/15 inner-rim text-left mb-8 space-y-3"></div>
 
@@ -1034,8 +1046,8 @@ function renderGrid(filter) {
       '<div class="flex items-center justify-between">' +
         '<span style="font-family:Literata,serif;font-size:20px;font-weight:700" class="text-on-surface">' + (p.priceLabel || fmt(p.price)) + '</span>' +
         (inCart > 0
-          ? '<div class="flex items-center gap-2"><button class="qty-btn" onclick="event.stopPropagation();changeQty(\'' + p.id + '\',-1)">−</button><span class="text-on-surface font-bold text-[14px] w-4 text-center">' + inCart + '</span><button class="qty-btn" onclick="event.stopPropagation();changeQty(\'' + p.id + '\',1)">+</button></div>'
-          : '<button class="btn-press px-5 py-2 rounded-full bg-primary/10 border border-primary/25 text-primary text-[11px] font-bold uppercase tracking-widest hover:bg-primary/20 transition-all duration-150" onclick="event.stopPropagation();addToCart(\'' + p.id + '\')" style="transition:transform 160ms var(--ease-out),background 150ms ease,border-color 150ms ease">Kosárba</button>'
+          ? '<div class="flex items-center gap-2"><button class="qty-btn" aria-label="Kevesebb" onclick="event.stopPropagation();changeQty(\'' + p.id + '\',-1)">−</button><span class="text-on-surface font-bold text-[14px] w-4 text-center">' + inCart + '</span><button class="qty-btn" aria-label="Több" onclick="event.stopPropagation();changeQty(\'' + p.id + '\',1)">+</button></div>'
+          : '<button class="btn-press px-5 py-2 rounded-full bg-primary/10 border border-primary/25 text-primary text-[11px] font-bold uppercase tracking-widest hover:bg-primary/20" onclick="event.stopPropagation();addToCart(\'' + p.id + '\')" style="transition:transform 160ms var(--ease-out),background 150ms ease,border-color 150ms ease">Kosárba</button>'
         ) +
       '</div>';
     grid.appendChild(card);
@@ -1189,9 +1201,9 @@ function updateCartUI() {
           '<p class="text-on-surface-variant text-[12px]">' + (item.size || '') + '</p>' +
         '</div>' +
         '<div class="flex items-center gap-2 shrink-0">' +
-          '<button class="qty-btn" onclick="changeQty(\'' + id + '\',-1)">−</button>' +
-          '<span class="text-on-surface font-bold text-[14px] w-4 text-center">' + item.qty + '</span>' +
-          '<button class="qty-btn" onclick="changeQty(\'' + id + '\',1)">+</button>' +
+          '<button class="qty-btn" aria-label="Kevesebb" onclick="changeQty(\'' + id + '\',-1)">−</button>' +
+          '<span class="text-on-surface font-bold text-[14px] w-4 text-center tabular-nums">' + item.qty + '</span>' +
+          '<button class="qty-btn" aria-label="Több" onclick="changeQty(\'' + id + '\',1)">+</button>' +
         '</div>' +
         '<span class="text-on-surface font-bold text-[14px] w-20 text-right shrink-0">' + fmt(item.price * item.qty) + '</span>';
       items.appendChild(row);
@@ -1239,29 +1251,69 @@ function goToStep1() {
   document.getElementById('step2').classList.add('hidden');
   document.getElementById('s1dot').classList.add('active');
   document.getElementById('s2dot').classList.remove('active');
+  document.getElementById('s3dot').classList.remove('active');
+}
+
+function selectedPayment() {
+  var checked = document.querySelector('[name="payment"]:checked');
+  return checked ? checked.value : 'email';
+}
+
+function checkoutTotals() {
+  var subtotal = cartTotal(loadCart());
+  var shipping = subtotal >= FREE_SHIP ? 0 : SHIP_COST;
+  var codFee = selectedPayment() === 'cod' ? COD_FEE : 0;
+  return { subtotal: subtotal, shipping: shipping, codFee: codFee, total: subtotal + shipping + codFee };
+}
+
+function updateSummaryTotals() {
+  var totals = checkoutTotals();
+  var codWrap = document.getElementById('summary-cod-wrap');
+  document.getElementById('summary-subtotal').textContent = fmt(totals.subtotal);
+  document.getElementById('summary-shipping').textContent = totals.shipping === 0 ? 'Ingyenes' : fmt(totals.shipping);
+  document.getElementById('summary-cod').textContent = fmt(totals.codFee);
+  codWrap.classList.toggle('hidden', totals.codFee === 0);
+  document.getElementById('summary-total').textContent = fmt(totals.total);
+}
+
+function addSummaryLine(label, value) {
+  var p = document.createElement('p');
+  p.className = 'text-on-surface-variant text-[14px]';
+  var strong = document.createElement('span');
+  strong.className = 'font-medium text-on-surface';
+  strong.textContent = label + ': ';
+  p.appendChild(strong);
+  p.appendChild(document.createTextNode(value));
+  document.getElementById('confirm-summary').appendChild(p);
 }
 
 function goToStep2() {
   var form = document.getElementById('shipping-form');
-  var inputs = form.querySelectorAll('[required]');
-  var ok = true;
-  inputs.forEach(function(inp){ if (!inp.value.trim()) { inp.style.borderColor='rgba(255,87,34,0.6)'; ok = false; } else { inp.style.borderColor=''; } });
-  if (!ok) return;
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
   var cart = loadCart();
-  var subtotal = cartTotal(cart);
-  var shipping = subtotal >= FREE_SHIP ? 0 : SHIP_COST;
-  // Render summary
+  if (cartCount(cart) === 0) {
+    alert('A kosár üres.');
+    return;
+  }
   var lines = document.getElementById('order-summary-lines');
   lines.innerHTML = '';
   Object.values(cart).forEach(function(item){
     var d = document.createElement('div');
     d.className = 'flex justify-between text-[14px]';
-    d.innerHTML = '<span class="text-on-surface-variant">' + item.name + ' <span class="text-on-surface-variant/50">×' + item.qty + '</span></span><span class="text-on-surface font-medium">' + fmt(item.price * item.qty) + '</span>';
+    var name = document.createElement('span');
+    name.className = 'text-on-surface-variant';
+    name.textContent = item.name + ' ×' + item.qty;
+    var price = document.createElement('span');
+    price.className = 'text-on-surface font-medium';
+    price.textContent = fmt(item.price * item.qty);
+    d.appendChild(name);
+    d.appendChild(price);
     lines.appendChild(d);
   });
-  document.getElementById('summary-subtotal').textContent = fmt(subtotal);
-  document.getElementById('summary-shipping').textContent = shipping === 0 ? 'Ingyenes' : fmt(shipping);
-  document.getElementById('summary-total').textContent = fmt(subtotal + shipping);
+  updateSummaryTotals();
   document.getElementById('step1').classList.add('hidden');
   document.getElementById('step2').classList.remove('hidden');
   document.getElementById('s2dot').classList.add('active');
@@ -1269,49 +1321,55 @@ function goToStep2() {
 }
 
 function submitOrder() {
+  var form = document.getElementById('shipping-form');
+  if (!form.checkValidity()) {
+    goToStep1();
+    form.reportValidity();
+    return;
+  }
   var cart = loadCart();
-  var subtotal = cartTotal(cart);
-  var payment = document.querySelector('[name="payment"]:checked').value;
-  var codFee = payment === 'cod' ? COD_FEE : 0;
-  var shipping = subtotal >= FREE_SHIP ? 0 : SHIP_COST;
-  var total = subtotal + shipping + codFee;
+  if (cartCount(cart) === 0) {
+    alert('A kosár üres.');
+    return;
+  }
+  var payment = selectedPayment();
+  var totals = checkoutTotals();
 
   var email = document.getElementById('email').value;
   var name = document.getElementById('fname').value + ' ' + document.getElementById('lname').value;
   var addr = document.getElementById('zip').value + ' ' + document.getElementById('city').value + ', ' + document.getElementById('street').value;
   var phone = document.getElementById('phone').value;
   var notes = document.getElementById('notes').value;
-  var payLabels = {card:'Bankkártyás (SimplePay)', transfer:'Átutalás', cod:'Utánvét'};
+  var payLabels = {email:'E-mailes egyeztetés', transfer:'Átutalás', cod:'Utánvét'};
 
-  // Build email body
   var body = 'Új rendelés érkezett a Chilli Baja webshopból!\n\n';
   body += '== VÁSÁRLÓ ==\n';
   body += 'Név: ' + name + '\nEmail: ' + email + '\nTelefon: ' + phone + '\nCím: ' + addr + '\n';
   if (notes) body += 'Megjegyzés: ' + notes + '\n';
   body += '\n== RENDELT TERMÉKEK ==\n';
   Object.values(cart).forEach(function(i){ body += '• ' + i.name + ' × ' + i.qty + ' = ' + fmt(i.price * i.qty) + '\n'; });
-  body += '\nRészösszeg: ' + fmt(subtotal) + '\nSzállítás: ' + fmt(shipping) + '\n';
-  if (codFee) body += 'Utánvét díj: ' + fmt(codFee) + '\n';
-  body += 'ÖSSZESEN: ' + fmt(total) + '\n\nFizetés: ' + payLabels[payment];
+  body += '\nRészösszeg: ' + fmt(totals.subtotal) + '\nSzállítás: ' + fmt(totals.shipping) + '\n';
+  if (totals.codFee) body += 'Utánvét díj: ' + fmt(totals.codFee) + '\n';
+  body += 'ÖSSZESEN: ' + fmt(totals.total) + '\n\nFizetés: ' + payLabels[payment];
 
   window.location.href = 'mailto:chillibaja@gmail.com?subject=' + encodeURIComponent('Új rendelés – ' + name) + '&body=' + encodeURIComponent(body);
 
-  // Show confirmation
   setTimeout(function(){
-    saveCart({});
-    updateCartUI();
     document.getElementById('checkout-view').style.display = 'none';
     var confirmView = document.getElementById('confirm-view');
     confirmView.style.display = 'block';
     document.getElementById('confirm-email').textContent = email;
-    document.getElementById('breadcrumb-label').textContent = 'Visszaigazolás';
+    document.getElementById('breadcrumb-label').textContent = 'E-mail piszkozat';
     var summary = document.getElementById('confirm-summary');
-    summary.innerHTML =
-      '<p class="text-[11px] uppercase tracking-widest text-on-surface-variant font-bold mb-3">Rendelés részletei</p>' +
-      '<p class="text-on-surface-variant text-[14px]"><span class="font-medium text-on-surface">Vásárló:</span> ' + name + '</p>' +
-      '<p class="text-on-surface-variant text-[14px]"><span class="font-medium text-on-surface">Szállítási cím:</span> ' + addr + '</p>' +
-      '<p class="text-on-surface-variant text-[14px]"><span class="font-medium text-on-surface">Fizetés:</span> ' + payLabels[payment] + '</p>' +
-      '<p class="text-on-surface-variant text-[14px] font-bold mt-3"><span class="text-on-surface">Összesen:</span> ' + fmt(total) + '</p>';
+    summary.textContent = '';
+    var title = document.createElement('p');
+    title.className = 'text-[11px] uppercase tracking-widest text-on-surface-variant font-bold mb-3';
+    title.textContent = 'Rendelés részletei';
+    summary.appendChild(title);
+    addSummaryLine('Vásárló', name);
+    addSummaryLine('Szállítási cím', addr);
+    addSummaryLine('Fizetés', payLabels[payment]);
+    addSummaryLine('Összesen', fmt(totals.total));
     document.getElementById('s3dot').classList.add('active');
     window.scrollTo({top:0, behavior:'smooth'});
   }, 300);
@@ -1345,6 +1403,9 @@ document.getElementById('cart-toggle').addEventListener('click', openCart);
 document.getElementById('cart-close').addEventListener('click', closeCart);
 document.getElementById('cart-overlay').addEventListener('click', closeCart);
 document.getElementById('checkout-btn').addEventListener('click', showCheckout);
+document.querySelectorAll('[name="payment"]').forEach(function(input){
+  input.addEventListener('change', updateSummaryTotals);
+});
 
 // Scroll header
 window.addEventListener('scroll', function(){
