@@ -83,7 +83,7 @@
   }
 
   /* ── Product card ── */
-  .product-card { transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out); }
+  .product-card { transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out); content-visibility: auto; contain-intrinsic-size: 0 380px; }
   @media (hover: hover) and (pointer: fine) {
     .product-card:hover { transform: translateY(-5px); box-shadow: 0 20px 56px rgba(255,87,34,0.18), 0 4px 16px rgba(0,0,0,0.5); }
   }
@@ -993,6 +993,9 @@ var PRODUCTS = [
   },
 ];
 
+// O(1) product lookup by id — replaces repeated PRODUCTS.find() calls
+var PRODUCT_MAP = new Map(PRODUCTS.map(function(p){ return [p.id, p]; }));
+
 // ════════════════════════════════════════════════
 // CART (localStorage)
 // ════════════════════════════════════════════════
@@ -1006,13 +1009,19 @@ function loadCart() {
 function saveCart(cart) {
   localStorage.setItem('chillibaja_cart', JSON.stringify(cart));
 }
-function cartTotal(cart) {
-  return Object.values(cart).reduce(function(s,i){ return s + i.price * i.qty; }, 0);
+// Cached Intl formatter — ~3-5× faster than toLocaleString per call
+var _nf = new Intl.NumberFormat('hu-HU');
+function fmt(n) { return _nf.format(n) + ' Ft'; }
+// Single-pass stats — avoid iterating the cart twice
+function cartStats(cart) {
+  return Object.values(cart).reduce(function(acc, i) {
+    acc.total += i.price * i.qty;
+    acc.count += i.qty;
+    return acc;
+  }, { total: 0, count: 0 });
 }
-function cartCount(cart) {
-  return Object.values(cart).reduce(function(s,i){ return s + i.qty; }, 0);
-}
-function fmt(n) { return n.toLocaleString('hu-HU') + ' Ft'; }
+function cartTotal(cart) { return cartStats(cart).total; }
+function cartCount(cart) { return cartStats(cart).count; }
 
 // ════════════════════════════════════════════════
 // RENDER PRODUCT GRID
@@ -1022,8 +1031,8 @@ function renderGrid(filter) {
   var grid = document.getElementById('product-grid');
   var products = filter === 'all' ? PRODUCTS : PRODUCTS.filter(function(p){ return p.category === filter; });
   grid.innerHTML = '';
+  var cart = loadCart();  // read localStorage once, not per product
   products.forEach(function(p, i) {
-    var cart = loadCart();
     var inCart = cart[p.id] ? cart[p.id].qty : 0;
     var card = document.createElement('article');
     card.className = 'product-card fade-up bg-surface-container-low rounded-2xl p-6 inner-rim ember-glow relative overflow-hidden cursor-pointer';
@@ -1058,13 +1067,11 @@ function renderGrid(filter) {
       entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
     }, {threshold:0.06});
     document.querySelectorAll('.fade-up').forEach(function(el){ io.observe(el); });
-    // Heat bars
-    document.querySelectorAll('.heat-bar[data-w]').forEach(function(bar){
-      var hio = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ if(e.isIntersecting){ e.target.style.width = e.target.dataset.w + '%'; hio.unobserve(e.target); } });
-      }, {threshold:0.5});
-      hio.observe(bar);
-    });
+    // Heat bars — single shared observer instead of one per element
+    var hio = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.style.width = e.target.dataset.w + '%'; hio.unobserve(e.target); } });
+    }, {threshold:0.5});
+    document.querySelectorAll('.heat-bar[data-w]').forEach(function(bar){ hio.observe(bar); });
   });
 }
 
@@ -1072,7 +1079,7 @@ function renderGrid(filter) {
 // PRODUCT DETAIL
 // ════════════════════════════════════════════════
 function openDetail(id) {
-  var p = PRODUCTS.find(function(x){ return x.id === id; });
+  var p = PRODUCT_MAP.get(id);
   if (!p) return;
   var cart = loadCart();
   var inCart = cart[id] ? cart[id].qty : 0;
@@ -1144,7 +1151,7 @@ function closeDetail() {
 // CART LOGIC
 // ════════════════════════════════════════════════
 function addToCart(id) {
-  var p = PRODUCTS.find(function(x){ return x.id === id; });
+  var p = PRODUCT_MAP.get(id);
   if (!p) return;
   var cart = loadCart();
   if (cart[id]) { cart[id].qty += 1; } else { cart[id] = {name: p.name, price: p.price, qty: 1, size: p.size}; }
@@ -1191,7 +1198,7 @@ function updateCartUI() {
       var item = cart[id];
       var row = document.createElement('div');
       row.className = 'flex items-center gap-4 py-3 border-b border-outline-variant/10';
-      var p = PRODUCTS.find(function(x){ return x.id === id; });
+      var p = PRODUCT_MAP.get(id);
       row.innerHTML =
         '<div class="w-14 h-14 rounded-xl bg-surface-container flex items-center justify-center shrink-0 overflow-hidden">' +
           '<img src="' + (p ? p.image : '') + '" alt="' + item.name + '" class="w-full h-full object-contain" style="filter:brightness(1.15)"/>' +
