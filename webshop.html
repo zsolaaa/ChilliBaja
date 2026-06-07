@@ -1194,8 +1194,8 @@ function updateCartUI() {
   var count = cartCount(cart);
   var total = cartTotal(cart);
   var badge = document.getElementById('cart-badge');
-  badge.textContent = count;
-  badge.style.opacity = count > 0 ? '1' : '0';
+  if (badge) { badge.textContent = count; badge.style.opacity = count > 0 ? '1' : '0'; }
+  var items = document.getElementById('drawer-items'); if (!items) return;
 
   // Drawer
   var items = document.getElementById('drawer-items');
