@@ -110,10 +110,15 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
       // Erősség attribútum – csak "erősség" nevű
       $erosseg = '';
       $attributes = $product->get_attributes();
-      foreach ( $attributes as $attr ) {
+      foreach ( $attributes as $attr_key => $attr ) {
         $attr_name = mb_strtolower( wc_attribute_label( $attr->get_name() ) );
         if ( $attr_name === 'erősség' || $attr_name === 'erosseg' || $attr_name === 'strength' ) {
-          $erosseg = implode( ', ', $attr->get_options() );
+          if ( $attr->is_taxonomy() ) {
+            $terms = wc_get_product_terms( $product->get_id(), $attr->get_name(), [ 'fields' => 'names' ] );
+            $erosseg = implode( ', ', $terms );
+          } else {
+            $erosseg = implode( ', ', $attr->get_options() );
+          }
           break;
         }
       }
