@@ -231,6 +231,30 @@ body {
   background: #1c1b1b !important;
 }
 
+/* ── WooCommerce termékoldal layout ── */
+.woocommerce div.product,
+.woocommerce-page div.product {
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+  padding: 40px 24px !important;
+}
+.woocommerce .woocommerce-breadcrumb {
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+  padding: 16px 24px 0 !important;
+  color: #c9a99f !important;
+  font-size: 13px !important;
+}
+.woocommerce .woocommerce-breadcrumb a {
+  color: #c9a99f !important;
+}
+.woocommerce-tabs,
+.related.products {
+  max-width: 1280px !important;
+  margin: 0 auto !important;
+  padding: 0 24px !important;
+}
+
 /* ── WooCommerce termékoldal kép mérete ── */
 .woocommerce div.product div.images {
   width: 40% !important;
