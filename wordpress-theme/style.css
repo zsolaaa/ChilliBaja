@@ -358,6 +358,24 @@ body {
 }
 .woocommerce ul.products li.product .button:hover { opacity: 0.85; }
 
+/* ── Kapcsolódó termékek grid ── */
+.related.products ul.products,
+.upsells.products ul.products {
+  grid-template-columns: repeat(4, 1fr) !important;
+}
+@media (max-width: 1024px) {
+  .related.products ul.products,
+  .upsells.products ul.products {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+@media (max-width: 640px) {
+  .related.products ul.products,
+  .upsells.products ul.products {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
 /* Kosár, checkout stílusok */
 .woocommerce-cart table.cart,
 .woocommerce-checkout form.checkout {
