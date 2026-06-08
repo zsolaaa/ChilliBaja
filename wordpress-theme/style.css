@@ -184,6 +184,27 @@ body {
   border: 1px solid rgba(255,87,34,0.25);
 }
 
+/* ── WooCommerce termékoldal kép mérete ── */
+.woocommerce div.product div.images {
+  width: 40% !important;
+  max-width: 420px !important;
+}
+.woocommerce div.product div.summary {
+  width: 55% !important;
+}
+.woocommerce div.product div.images img {
+  max-height: 420px !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+@media (max-width: 768px) {
+  .woocommerce div.product div.images,
+  .woocommerce div.product div.summary {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
 /* ── WooCommerce alap overrides ── */
 .woocommerce .products {
   display: grid !important;
