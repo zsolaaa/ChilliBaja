@@ -106,22 +106,81 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
   ?>
   <?php if ( $products ) : ?>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <?php foreach ( $products as $product ) : ?>
-    <article class="bg-[#1c1b1b] border border-[#5b4039]/25 rounded-2xl overflow-hidden ember-glow group hover:-translate-y-1 transition-transform duration-300">
-      <a href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>">
-        <?php echo $product->get_image( 'woocommerce_thumbnail', [ 'class' => 'w-full aspect-square object-cover' ] ); ?>
-      </a>
-      <div class="p-4">
-        <h3 class="font-serif text-base font-semibold text-[#f5ede8] mb-1">
-          <a href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>" class="hover:text-[#ff8a65] transition-colors">
+    <?php foreach ( $products as $product ) :
+      // Erősség attribútum
+      $erosseg = '';
+      $attributes = $product->get_attributes();
+      foreach ( $attributes as $attr ) {
+        $attr_name = strtolower( wc_attribute_label( $attr->get_name() ) );
+        if ( strpos( $attr_name, 'er' ) !== false || strpos( $attr_name, 'strength' ) !== false ) {
+          $erosseg = implode( ', ', $attr->get_options() );
+          break;
+        }
+      }
+      // Erősség szín
+      $erosseg_szin = '#ffb5a0';
+      if ( $erosseg ) {
+        $lower = mb_strtolower( $erosseg );
+        if ( strpos( $lower, 'extrém' ) !== false || strpos( $lower, 'extra' ) !== false ) $erosseg_szin = '#ff3300';
+        elseif ( strpos( $lower, 'nagyon' ) !== false || strpos( $lower, 'erős' ) !== false ) $erosseg_szin = '#ff5722';
+        elseif ( strpos( $lower, 'közepes' ) !== false ) $erosseg_szin = '#ff8a65';
+        elseif ( strpos( $lower, 'enyhe' ) !== false || strpos( $lower, 'enyhén' ) !== false ) $erosseg_szin = '#ffb5a0';
+      }
+      // Badge (featured = Bestseller)
+      $badge = $product->is_featured() ? 'Bestseller' : '';
+    ?>
+    <article class="bg-surface-container-low border border-outline-variant/25 rounded-2xl overflow-hidden ember-glow group hover:-translate-y-1 transition-transform duration-300 flex flex-col">
+
+      <!-- Kép + badge -->
+      <div class="relative">
+        <?php if ( $badge ) : ?>
+        <span class="absolute top-3 right-3 z-10 font-label-caps text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full text-white" style="background:linear-gradient(135deg,#ff5722,#ff8a65)"><?php echo esc_html( $badge ); ?></span>
+        <?php endif; ?>
+        <a href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>">
+          <?php echo $product->get_image( 'woocommerce_thumbnail', [ 'class' => 'w-full h-52 object-cover' ] ); ?>
+        </a>
+      </div>
+
+      <!-- Tartalom -->
+      <div class="p-5 flex flex-col flex-1">
+        <h3 class="font-headline-lg text-headline-lg text-on-surface mb-2 leading-snug">
+          <a href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>" class="hover:text-primary transition-colors">
             <?php echo esc_html( $product->get_name() ); ?>
           </a>
         </h3>
-        <p class="text-[#ff8a65] font-bold text-sm mb-3"><?php echo $product->get_price_html(); ?></p>
-        <a href="<?php echo esc_url( $product->add_to_cart_url() ); ?>"
-           class="block w-full text-center gradient-fire text-white text-sm font-semibold py-2 rounded-lg hover:opacity-90 transition-opacity">
-          Kosárba
-        </a>
+
+        <p class="text-on-surface-variant font-body-md text-[13px] mb-4 leading-relaxed flex-1">
+          <?php echo wp_trim_words( $product->get_short_description() ?: $product->get_description(), 12, '…' ); ?>
+        </p>
+
+        <?php if ( $erosseg ) : ?>
+        <!-- Erősség sáv -->
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant">Erősség</span>
+            <span class="font-label-caps text-[10px] uppercase tracking-widest" style="color:<?php echo esc_attr( $erosseg_szin ); ?>"><?php echo esc_html( $erosseg ); ?></span>
+          </div>
+          <div class="h-[3px] rounded-full bg-outline-variant/30 overflow-hidden">
+            <div class="h-full rounded-full" style="background:linear-gradient(90deg,#ff5722,<?php echo esc_attr( $erosseg_szin ); ?>);width:<?php
+              $lower = mb_strtolower( $erosseg );
+              if ( strpos( $lower, 'extrém' ) !== false || strpos( $lower, 'extra' ) !== false ) echo '100%';
+              elseif ( strpos( $lower, 'nagyon' ) !== false ) echo '80%';
+              elseif ( strpos( $lower, 'közepes' ) !== false ) echo '55%';
+              elseif ( strpos( $lower, 'enyhe' ) !== false ) echo '30%';
+              else echo '50%';
+            ?>"></div>
+          </div>
+        </div>
+        <?php endif; ?>
+
+        <!-- Ár + gomb -->
+        <div class="flex items-center justify-between mt-auto">
+          <span class="text-on-surface font-bold text-[16px]"><?php echo $product->get_price_html(); ?></span>
+          <a href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>"
+             class="font-label-caps text-[11px] uppercase tracking-widest px-4 py-2 rounded-full border border-primary/25 text-primary hover:bg-primary/10 hover:border-primary/45 transition-colors duration-150">
+            Részletek
+          </a>
+        </div>
       </div>
     </article>
     <?php endforeach; ?>
