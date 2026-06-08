@@ -1,0 +1,8 @@
+{
+  "name": "chillibaja-webshop",
+  "version": "1.0.0",
+  "description": "Chilli Baja webshop",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  }
+}

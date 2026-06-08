@@ -1250,27 +1250,27 @@ function stripeCheckout() {
   var cart = loadCart();
   var keys = Object.keys(cart);
   if (keys.length === 0) return;
-
-  // Kosár tartalom összefoglalása
-  var lines = keys.map(function(id) {
+  var btn = document.getElementById('checkout-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Betöltés...'; }
+  var items = keys.map(function(id) {
     var item = cart[id];
-    return item.name + ' x' + item.qty + ' (' + fmt(item.price * item.qty) + ')';
+    return { name: item.name, price: item.price, qty: item.qty, size: item.size || '' };
   });
-  var total = cartTotal(cart);
-  var msg = 'Rendelés összefoglalója:\n\n' + lines.join('\n') + '\n\nVégösszeg: ' + fmt(total);
-
-  // Stripe Payment Link megnyitása
-  // FONTOS: Cseréld le a saját Stripe Payment Link URL-edre!
-  var stripeUrl = 'https://buy.stripe.com/test_aFaaEY4pEe6c8wV7ODco000';
-
-  if (stripeUrl === 'https://buy.stripe.com/test_aFaaEY4pEe6c8wV7ODco000') {
-    alert('A Stripe Payment Link még nincs beállítva.\n\n' + msg);
-    return;
-  }
-  window.open(stripeUrl, '_blank');
+  fetch('/api/checkout', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items: items })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.url) { window.location.href = data.url; }
+    else { alert('Hiba: ' + (data.error || 'Ismeretlen hiba')); if (btn) { btn.disabled = false; btn.textContent = 'Tovább a fizetéshez'; } }
+  })
+  .catch(function() {
+    alert('Kapcsolati hiba. Kérjük próbáld újra!');
+    if (btn) { btn.disabled = false; btn.textContent = 'Tovább a fizetéshez'; }
+  });
 }
-
-function showCheckout() {
   closeCart();
   document.getElementById('shop-view').classList.remove('active');
   document.getElementById('detail-view').style.display = 'none';
