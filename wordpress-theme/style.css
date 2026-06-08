@@ -184,6 +184,32 @@ body {
   border: 1px solid rgba(255,87,34,0.25);
 }
 
+/* ── WooCommerce értesítések (notices) ── */
+.woocommerce-notices-wrapper,
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+  background: #1c1b1b !important;
+  color: #e5e2e1 !important;
+  border-top: 3px solid #ff5722 !important;
+  border-radius: 0 !important;
+  padding: 12px 24px !important;
+  font-size: 14px !important;
+}
+.woocommerce-message a.button,
+.woocommerce-message .button {
+  background: linear-gradient(135deg, #ff5722 0%, #ff8a65 100%) !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  padding: 8px 20px !important;
+  font-size: 12px !important;
+  border: none !important;
+  float: right !important;
+}
+.woocommerce-message::before {
+  color: #ff5722 !important;
+}
+
 /* ── WooCommerce termékoldal kép mérete ── */
 .woocommerce div.product div.images {
   width: 40% !important;
