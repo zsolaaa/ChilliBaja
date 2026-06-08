@@ -5,7 +5,7 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
 ?>
 
 <!-- ══════════════════ HERO ══════════════════ -->
-<section class="noise-overlay relative min-h-[100svh] flex items-end overflow-hidden">
+<section class="noise-overlay relative min-h-[100svh] flex items-start overflow-hidden">
 
   <!-- Háttérkép -->
   <div class="absolute inset-0 -z-10">
@@ -38,8 +38,8 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
     <?php endforeach; ?>
   </div>
 
-  <!-- Hero szöveg – bal alsó, nagy tipográfia -->
-  <div class="relative z-10 px-6 pb-20 md:pb-32 max-w-[1280px] mx-auto w-full self-end">
+  <!-- Hero szöveg – bal felül -->
+  <div class="relative z-10 px-6 pt-32 md:pt-40 max-w-[1280px] mx-auto w-full">
 
     <div class="hero-line inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full" id="hero-badge"
          style="background:linear-gradient(90deg,rgba(255,87,34,0.12) 0%,rgba(255,181,160,0.28) 40%,rgba(255,87,34,0.12) 80%);background-size:200% auto;animation:shimmer 3.5s linear infinite;border:1px solid rgba(255,87,34,0.25)">
