@@ -58,14 +58,14 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
       <?php echo esc_html( chili_field( 'hero_alcim', 'Kézzel készített prémium chili szószok Bajáról.' ) ); ?>
     </p>
 
-    <div class="hero-line flex flex-col sm:flex-row gap-4">
+    <div class="hero-line flex flex-row gap-4">
       <a href="<?php echo esc_url( $shop_url ); ?>"
-         class="group relative w-full sm:w-auto px-10 py-4 rounded-full text-white font-label-caps text-label-caps uppercase tracking-widest overflow-hidden hover:brightness-110 hover:shadow-[0_0_40px_rgba(255,87,34,0.55)] transition-all duration-150"
+         class="inline-flex items-center px-8 py-3.5 rounded-full text-white font-label-caps text-label-caps uppercase tracking-widest hover:brightness-110 hover:shadow-[0_0_40px_rgba(255,87,34,0.55)] transition-all duration-150"
          style="background:linear-gradient(135deg,#ff5722 0%,#ff8a65 100%)">
         <?php echo esc_html( chili_field( 'hero_gomb1', 'Vásárlás' ) ); ?>
       </a>
       <a href="#helyszinek"
-         class="hidden sm:inline-flex w-full sm:w-auto px-10 py-4 rounded-full border border-primary/25 text-primary font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary/8 hover:border-primary/40 transition-colors duration-150">
+         class="inline-flex items-center px-8 py-3.5 rounded-full border border-primary/25 text-primary font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary/10 hover:border-primary/40 transition-colors duration-150">
         <?php echo esc_html( chili_field( 'hero_gomb2', 'Hol kapható' ) ); ?>
       </a>
     </div>
