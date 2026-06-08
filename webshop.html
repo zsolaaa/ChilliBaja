@@ -1271,7 +1271,7 @@ function stripeCheckout() {
     if (btn) { btn.disabled = false; btn.textContent = 'Tovább a fizetéshez'; }
   });
 }
-  closeCart();
+function showCheckout() {
   document.getElementById('shop-view').classList.remove('active');
   document.getElementById('detail-view').style.display = 'none';
   document.getElementById('confirm-view').style.display = 'none';
