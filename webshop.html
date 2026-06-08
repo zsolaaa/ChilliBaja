@@ -13,11 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Snipcart -->
-<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.3.3/default/snipcart.css"/>
-<script>window.SnipcartSettings = { publicApiKey: "YzNhY2UzYjYtZDNlYy00OTBiLThkMWQtMzBkMjQ2Zjc0YjU5NjM5MTY0NTAwMjExMzEyNjg0", currency: "huf", loadStrategy: "on-user-interaction" };</script>
-<script async src="https://cdn.snipcart.com/themes/v3.3.3/default/snipcart.js"></script>
-<div hidden id="snipcart" data-api-key="YzNhY2UzYjYtZDNlYy00OTBiLThkMWQtMzBkMjQ2Zjc0YjU5NjM5MTY0NTAwMjExMzEyNjg0" data-currency="huf"></div>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,wght@0,400;0,700;0,800;1,400&family=Work+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; }
@@ -180,8 +176,8 @@ tailwind.config = {
       <span id="breadcrumb-label" class="text-on-surface">Webshop</span>
     </div>
 
-    <!-- Cart icon — Snipcart -->
-    <button class="snipcart-checkout btn-press relative flex items-center gap-2 px-4 py-2 rounded-full border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-primary/35" style="transition:color 140ms ease,border-color 140ms ease,transform 160ms var(--ease-out)">
+    <!-- Cart icon -->
+    <button id="cart-toggle" class="btn-press relative flex items-center gap-2 px-4 py-2 rounded-full border border-outline-variant/30 text-on-surface-variant hover:text-primary hover:border-primary/35" style="transition:color 140ms ease,border-color 140ms ease,transform 160ms var(--ease-out)">
       <span class="material-symbols-outlined text-[20px]" style="font-variation-settings:'FILL' 1;">shopping_bag</span>
       <span class="hidden sm:inline text-[13px] font-medium">Kosár</span>
       <span id="cart-badge" class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full gradient-fire text-on-primary-container text-[10px] font-bold flex items-center justify-center opacity-0 transition-opacity duration-200">0</span>
@@ -220,7 +216,7 @@ tailwind.config = {
 <div id="detail-view" class="pt-24 pb-20 px-gutter max-w-container-max mx-auto"></div>
 
 <!-- ═══════════════════════════════ CART DRAWER ═══ -->
-<div id="cart-drawer" role="dialog" aria-modal="true" style="display:none">
+<div id="cart-drawer" role="dialog" aria-labelledby="cart-drawer-title" aria-modal="true">
   <div id="cart-overlay"></div>
   <div id="cart-panel">
     <!-- Header -->
@@ -265,7 +261,7 @@ tailwind.config = {
           <p class="text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">Összesen</p>
           <p id="drawer-total" class="text-on-surface font-bold text-[22px] tabular-nums" style="font-family:Literata,serif">0 Ft</p>
         </div>
-        <button id="checkout-btn" class="btn-press px-7 py-3.5 rounded-full gradient-fire text-on-primary-container hover:brightness-110 hover:shadow-[0_0_24px_rgba(255,87,34,0.4)]" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">
+<button id="checkout-btn" onclick="stripeCheckout()" class="btn-press px-7 py-3.5 rounded-full gradient-fire text-on-primary-container hover:brightness-110 hover:shadow-[0_0_24px_rgba(255,87,34,0.4)]" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">
           Tovább a fizetéshez
         </button>
       </div>
@@ -1058,10 +1054,10 @@ function renderGrid(filter) {
       '</div>' +
       '<div class="flex items-center justify-between">' +
         '<span style="font-family:Literata,serif;font-size:20px;font-weight:700" class="text-on-surface">' + (p.priceLabel || fmt(p.price)) + '</span>' +
-        '<button class="btn-press px-5 py-2 rounded-full bg-primary/10 border border-primary/25 text-primary text-[11px] font-bold uppercase tracking-widest hover:bg-primary/20"' +
-          ' onclick="event.stopPropagation();addToCartSnipcart(\'' + p.id + '\')" style="transition:transform 160ms var(--ease-out),background 150ms ease">Kos&#225;rba</button>' +
-
-
+        (inCart > 0
+          ? '<div class="flex items-center gap-2"><button class="qty-btn" aria-label="Kevesebb" onclick="event.stopPropagation();changeQty(\'' + p.id + '\',-1)">−</button><span class="text-on-surface font-bold text-[14px] w-4 text-center">' + inCart + '</span><button class="qty-btn" aria-label="Több" onclick="event.stopPropagation();changeQty(\'' + p.id + '\',1)">+</button></div>'
+          : '<button class="btn-press px-5 py-2 rounded-full bg-primary/10 border border-primary/25 text-primary text-[11px] font-bold uppercase tracking-widest hover:bg-primary/20" onclick="event.stopPropagation();addToCart(\'' + p.id + '\')" style="transition:transform 160ms var(--ease-out),background 150ms ease,border-color 150ms ease">Kosárba</button>'
+        ) +
       '</div>';
     grid.appendChild(card);
   });
@@ -1113,7 +1109,7 @@ function openDetail(id) {
         '<div id="detail-cart-ctrl" class="flex items-center gap-4 mb-8">' +
           (inCart > 0
             ? '<div class="flex items-center gap-3"><button class="qty-btn w-10 h-10" onclick="changeQty(\'' + p.id + '\',-1);renderDetailCtrl(\'' + p.id + '\')">−</button><span class="text-on-surface font-bold text-[18px] w-6 text-center">' + inCart + '</span><button class="qty-btn w-10 h-10" onclick="changeQty(\'' + p.id + '\',1);renderDetailCtrl(\'' + p.id + '\')">+</button></div><button class="btn-press px-6 py-3 rounded-full border border-primary/35 text-primary text-[11px] font-bold uppercase tracking-widest" onclick="openCart()">Kosár megtekintése</button>'
-            : '<button class="btn-press flex-1 py-3.5 rounded-full gradient-fire text-on-primary-container hover:brightness-110 hover:shadow-[0_0_24px_rgba(255,87,34,0.4)]"' + ' onclick="addToCartSnipcart(\'' + p.id + '\')" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Kos&#225;rba</button>'
+            : '<button class="btn-press flex-1 py-3.5 rounded-full gradient-fire text-on-primary-container hover:brightness-110 hover:shadow-[0_0_24px_rgba(255,87,34,0.4)]" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase" onclick="addToCart(\'' + p.id + '\');renderDetailCtrl(\'' + p.id + '\')">Kosárba</button>'
           ) +
         '</div>' +
         '<div class="space-y-3 border-t border-outline-variant/15 pt-6">' +
@@ -1140,7 +1136,7 @@ function renderDetailCtrl(id) {
   if (inCart > 0) {
     ctrl.innerHTML = '<div class="flex items-center gap-3"><button class="qty-btn w-10 h-10" onclick="changeQty(\'' + id + '\',-1);renderDetailCtrl(\'' + id + '\')">−</button><span class="text-on-surface font-bold text-[18px] w-6 text-center">' + inCart + '</span><button class="qty-btn w-10 h-10" onclick="changeQty(\'' + id + '\',1);renderDetailCtrl(\'' + id + '\')">+</button></div><button class="btn-press px-6 py-3 rounded-full border border-primary/35 text-primary text-[11px] font-bold uppercase tracking-widest" onclick="openCart()">Kosár megtekintése</button>';
   } else {
-    ctrl.innerHTML = '<button class="btn-press flex-1 py-3.5 rounded-full gradient-fire text-on-primary-container hover:brightness-110" onclick="addToCartSnipcart(\'' + id + '\')" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase">Kos&#225;rba</button>';
+    ctrl.innerHTML = '<button class="btn-press flex-1 py-3.5 rounded-full gradient-fire text-on-primary-container hover:brightness-110" style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase" onclick="addToCart(\'' + id + '\');renderDetailCtrl(\'' + id + '\')">Kosárba</button>';
   }
 }
 
@@ -1164,21 +1160,6 @@ function addToCart(id) {
   renderGrid(currentFilter);
 }
 
-function addToCartSnipcart(id) {
-  var p = PRODUCT_MAP.get(id);
-  if (!p) return;
-  if (!window.Snipcart) { alert('A fizetési rendszer betöltése folyamatban, próbáld újra!'); return; }
-  Snipcart.api.cart.items.add({
-    id: p.id,
-    name: p.name,
-    price: p.price,
-    url: 'https://zsolaaa.github.io/ChilliBaja/webshop.html',
-    description: p.subtitle || '',
-    image: p.image,
-    quantity: 1
-  });
-}
-
 function changeQty(id, delta) {
   var cart = loadCart();
   if (!cart[id]) return;
@@ -1194,8 +1175,8 @@ function updateCartUI() {
   var count = cartCount(cart);
   var total = cartTotal(cart);
   var badge = document.getElementById('cart-badge');
-  if (badge) { badge.textContent = count; badge.style.opacity = count > 0 ? '1' : '0'; }
-  var items = document.getElementById('drawer-items'); if (!items) return;
+  badge.textContent = count;
+  badge.style.opacity = count > 0 ? '1' : '0';
 
   // Drawer
   var items = document.getElementById('drawer-items');
@@ -1249,18 +1230,46 @@ function updateCartUI() {
   }
 }
 
-function openCart() { if(window.Snipcart) Snipcart.api.theme.cart.open(); }
-
-
-
-function closeCart() { if(window.Snipcart) Snipcart.api.theme.cart.close(); }
-
-
-
+function openCart() {
+  document.getElementById('cart-drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCart() {
+  document.getElementById('cart-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
 
 // ════════════════════════════════════════════════
 // CHECKOUT
 // ════════════════════════════════════════════════
+
+// ════════════════════════════════════════════════
+// STRIPE CHECKOUT
+// ════════════════════════════════════════════════
+function stripeCheckout() {
+  var cart = loadCart();
+  var keys = Object.keys(cart);
+  if (keys.length === 0) return;
+
+  // Kosár tartalom összefoglalása
+  var lines = keys.map(function(id) {
+    var item = cart[id];
+    return item.name + ' x' + item.qty + ' (' + fmt(item.price * item.qty) + ')';
+  });
+  var total = cartTotal(cart);
+  var msg = 'Rendelés összefoglalója:\n\n' + lines.join('\n') + '\n\nVégösszeg: ' + fmt(total);
+
+  // Stripe Payment Link megnyitása
+  // FONTOS: Cseréld le a saját Stripe Payment Link URL-edre!
+  var stripeUrl = 'STRIPE_PAYMENT_LINK_URL';
+
+  if (stripeUrl === 'STRIPE_PAYMENT_LINK_URL') {
+    alert('A Stripe Payment Link még nincs beállítva.\n\n' + msg);
+    return;
+  }
+  window.open(stripeUrl, '_blank');
+}
+
 function showCheckout() {
   closeCart();
   document.getElementById('shop-view').classList.remove('active');
@@ -1425,9 +1434,9 @@ document.getElementById('filter-bar').addEventListener('click', function(e){
 // ════════════════════════════════════════════════
 // EVENTS
 // ════════════════════════════════════════════════
-// cart events handled by snipcart
-
-
+document.getElementById('cart-toggle').addEventListener('click', openCart);
+document.getElementById('cart-close').addEventListener('click', closeCart);
+document.getElementById('cart-overlay').addEventListener('click', closeCart);
 document.getElementById('checkout-btn').addEventListener('click', showCheckout);
 document.querySelectorAll('[name="payment"]').forEach(function(input){
   input.addEventListener('change', updateSummaryTotals);
