@@ -43,30 +43,30 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
 
     <div class="hero-line inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full" id="hero-badge"
          style="background:linear-gradient(90deg,rgba(255,87,34,0.12) 0%,rgba(255,181,160,0.28) 40%,rgba(255,87,34,0.12) 80%);background-size:200% auto;animation:shimmer 3.5s linear infinite;border:1px solid rgba(255,87,34,0.25)">
-      <span class="font-label-caps text-label-caps uppercase tracking-widest text-primary text-[10px]">Kézzel készített &middot; Baja &middot; Kis szériás</span>
+      <span class="font-label-caps text-label-caps uppercase tracking-widest text-primary text-[10px]"><?php echo esc_html( chili_field( 'hero_badge', 'Kézzel készített · Baja · Kis szériás' ) ); ?></span>
     </div>
 
     <h1 class="hero-line font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg mb-3 leading-tight text-on-surface">
-      A parázs íze a te<br>
-      <span class="text-primary">konyhádban.</span>
+      <?php echo esc_html( chili_field( 'hero_cim1', 'A parázs íze a te' ) ); ?><br>
+      <span class="text-primary"><?php echo esc_html( chili_field( 'hero_cim2', 'konyhádban.' ) ); ?></span>
     </h1>
 
     <div id="hero-fire-line" class="mb-7 h-[2px] w-40 rounded-full"
          style="background:linear-gradient(90deg,#ff5722,#ff8a65);transform-origin:left center;animation:fire-line-grow 0.9s cubic-bezier(0.22,1,0.36,1) 0.55s both"></div>
 
     <p class="hero-line font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-lg">
-      Kézzel készített prémium chili szószok Bajáról.
+      <?php echo esc_html( chili_field( 'hero_alcim', 'Kézzel készített prémium chili szószok Bajáról.' ) ); ?>
     </p>
 
     <div class="hero-line flex flex-col sm:flex-row gap-4">
       <a href="<?php echo esc_url( $shop_url ); ?>"
          class="group relative w-full sm:w-auto px-10 py-4 rounded-full text-white font-label-caps text-label-caps uppercase tracking-widest overflow-hidden hover:brightness-110 hover:shadow-[0_0_40px_rgba(255,87,34,0.55)] transition-all duration-150"
          style="background:linear-gradient(135deg,#ff5722 0%,#ff8a65 100%)">
-        Vásárlás
+        <?php echo esc_html( chili_field( 'hero_gomb1', 'Vásárlás' ) ); ?>
       </a>
       <a href="#helyszinek"
          class="hidden sm:inline-flex w-full sm:w-auto px-10 py-4 rounded-full border border-primary/25 text-primary font-label-caps text-label-caps uppercase tracking-widest hover:bg-primary/8 hover:border-primary/40 transition-colors duration-150">
-        Hol kapható
+        <?php echo esc_html( chili_field( 'hero_gomb2', 'Hol kapható' ) ); ?>
       </a>
     </div>
   </div>
@@ -147,31 +147,31 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
       </div>
       <div class="absolute -bottom-5 -right-4 md:-right-8 p-6 rounded-2xl border border-primary/15 shadow-2xl max-w-[190px]"
            style="background:#131313;box-shadow:inset 1px 1px 0 rgba(255,255,255,0.05),inset -1px -1px 0 rgba(0,0,0,0.15)">
-        <span class="text-primary font-extrabold text-[40px] block tracking-tight leading-none mb-1">100%</span>
-        <p class="text-on-surface-variant text-[13px] leading-snug">Helyi termesztésű alapanyagok, közvetlen kistermelőktől.</p>
+        <span class="text-primary font-extrabold text-[40px] block tracking-tight leading-none mb-1"><?php echo esc_html( chili_field( 'rolunk_badge', '100%' ) ); ?></span>
+        <p class="text-on-surface-variant text-[13px] leading-snug"><?php echo esc_html( chili_field( 'rolunk_badge_szoveg', 'Helyi termesztésű alapanyagok, közvetlen kistermelőktől.' ) ); ?></p>
       </div>
     </div>
 
     <!-- Jobb: szöveg -->
     <div class="fade-up delay-1">
-      <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary mb-4">A mi történetünk</p>
-      <h2 class="font-headline-xl text-headline-xl text-on-surface mb-8">A farmtól az asztalig</h2>
+      <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary mb-4"><?php echo esc_html( chili_field( 'rolunk_label', 'A mi történetünk' ) ); ?></p>
+      <h2 class="font-headline-xl text-headline-xl text-on-surface mb-8"><?php echo esc_html( chili_field( 'rolunk_cim', 'A farmtól az asztalig' ) ); ?></h2>
       <div class="space-y-5 font-body-lg text-on-surface-variant max-w-[54ch]">
-        <p>A Chili Baja nem csupán egy márka, hanem egy szenvedélyprojekt, amely a bajai Duna-part napsütötte földjein született. Hiszünk abban, hogy a prémium minőség alapja a tisztelet: a föld, a növény és a vásárló iránt.</p>
-        <p>Minden egyes üveg szósz kis szériás gyártással készül. Kézzel válogatjuk a paprikákat, és hagyományos, lassú érlelési technikákat alkalmazunk, hogy megőrizzük a chilik eredeti ízvilágát.</p>
+        <p><?php echo esc_html( chili_field( 'rolunk_szoveg1', 'A Chili Baja nem csupán egy márka, hanem egy szenvedélyprojekt, amely a bajai Duna-part napsütötte földjein született. Hiszünk abban, hogy a prémium minőség alapja a tisztelet: a föld, a növény és a vásárló iránt.' ) ); ?></p>
+        <p><?php echo esc_html( chili_field( 'rolunk_szoveg2', 'Minden egyes üveg szósz kis szériás gyártással készül. Kézzel válogatjuk a paprikákat, és hagyományos, lassú érlelési technikákat alkalmazunk, hogy megőrizzük a chilik eredeti ízvilágát.' ) ); ?></p>
       </div>
       <ul class="mt-8 space-y-4">
         <li class="flex items-center gap-4 text-on-surface font-body-lg">
           <span class="material-symbols-outlined text-primary shrink-0" style="font-variation-settings:'FILL' 1">check_circle</span>
-          Tartósítószer-mentes receptúra
+          <?php echo esc_html( chili_field( 'rolunk_check1', 'Tartósítószer-mentes receptúra' ) ); ?>
         </li>
         <li class="flex items-center gap-4 text-on-surface font-body-lg">
           <span class="material-symbols-outlined text-primary shrink-0" style="font-variation-settings:'FILL' 1">check_circle</span>
-          Tradicionális eljárások
+          <?php echo esc_html( chili_field( 'rolunk_check2', 'Tradicionális eljárások' ) ); ?>
         </li>
         <li class="flex items-center gap-4 text-on-surface font-body-lg">
           <span class="material-symbols-outlined text-primary shrink-0" style="font-variation-settings:'FILL' 1">check_circle</span>
-          Közvetlen kapcsolat a termelőkkel
+          <?php echo esc_html( chili_field( 'rolunk_check3', 'Közvetlen kapcsolat a termelőkkel' ) ); ?>
         </li>
       </ul>
     </div>
@@ -190,10 +190,10 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
 
     <blockquote class="stagger-item bg-surface-container rounded-2xl p-8 border border-outline-variant/10 flex flex-col">
       <span class="material-symbols-outlined text-[32px] mb-5 leading-none" style="color:rgba(255,181,160,0.35);font-variation-settings:'FILL' 1">format_quote</span>
-      <p class="font-body-lg text-on-surface-variant italic leading-relaxed flex-1">"A Füstös Fenevad az új kedvencem. Nem csak csíp, hanem tényleg íze is van. Érezni rajta a gondos odafigyelést."</p>
+      <p class="font-body-lg text-on-surface-variant italic leading-relaxed flex-1"><?php echo esc_html( chili_field( 'vel1_szoveg', '"A Füstös Fenevad az új kedvencem. Nem csak csíp, hanem tényleg íze is van. Érezni rajta a gondos odafigyelést."' ) ); ?></p>
       <footer class="mt-6 pt-5 border-t border-outline-variant/15">
-        <p class="font-label-caps text-[10px] uppercase tracking-widest text-primary">Kovács Gábor</p>
-        <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5">Séf</p>
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-primary"><?php echo esc_html( chili_field( 'vel1_nev', 'Kovács Gábor' ) ); ?></p>
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5"><?php echo esc_html( chili_field( 'vel1_szerep', 'Séf' ) ); ?></p>
       </footer>
     </blockquote>
 
@@ -201,19 +201,19 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
                 style="background:linear-gradient(150deg,#221512 0%,#1c1b1b 100%);border:1px solid rgba(255,181,160,0.14)">
       <div class="absolute top-0 right-0 w-36 h-36 rounded-full pointer-events-none" style="background:rgba(255,87,34,0.05);filter:blur(40px)"></div>
       <span class="material-symbols-outlined text-primary text-[32px] mb-5 leading-none" style="font-variation-settings:'FILL' 1">format_quote</span>
-      <p class="font-body-lg text-on-surface italic leading-relaxed flex-1">"Végre egy magyar chili, ami nem csak a brutális erőről szól, hanem a gasztronómiai élményről is. A Mézes Méreg zseniális!"</p>
+      <p class="font-body-lg text-on-surface italic leading-relaxed flex-1"><?php echo esc_html( chili_field( 'vel2_szoveg', '"Végre egy magyar chili, ami nem csak a brutális erőről szól, hanem a gasztronómiai élményről is. A Mézes Méreg zseniális!"' ) ); ?></p>
       <footer class="mt-6 pt-5 border-t border-primary/15">
-        <p class="font-label-caps text-[10px] uppercase tracking-widest text-primary">Nagy Emese</p>
-        <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5">Food Blogger</p>
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-primary"><?php echo esc_html( chili_field( 'vel2_nev', 'Nagy Emese' ) ); ?></p>
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5"><?php echo esc_html( chili_field( 'vel2_szerep', 'Food Blogger' ) ); ?></p>
       </footer>
     </blockquote>
 
     <blockquote class="stagger-item bg-surface-container rounded-2xl p-8 border border-outline-variant/10 flex flex-col">
       <span class="material-symbols-outlined text-[32px] mb-5 leading-none" style="color:rgba(255,181,160,0.35);font-variation-settings:'FILL' 1">format_quote</span>
-      <p class="font-body-lg text-on-surface-variant italic leading-relaxed flex-1">"A kiszállítás gyors volt, a csomagolás prémium. A Hajnali Harag tényleg odaver. Azóta is rendszeresen rendelem."</p>
+      <p class="font-body-lg text-on-surface-variant italic leading-relaxed flex-1"><?php echo esc_html( chili_field( 'vel3_szoveg', '"A kiszállítás gyors volt, a csomagolás prémium. A Hajnali Harag tényleg odaver. Azóta is rendszeresen rendelem."' ) ); ?></p>
       <footer class="mt-6 pt-5 border-t border-outline-variant/15">
-        <p class="font-label-caps text-[10px] uppercase tracking-widest text-primary">Molnár Péter</p>
-        <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5">Vásárló</p>
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-primary"><?php echo esc_html( chili_field( 'vel3_nev', 'Molnár Péter' ) ); ?></p>
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5"><?php echo esc_html( chili_field( 'vel3_szerep', 'Vásárló' ) ); ?></p>
       </footer>
     </blockquote>
 
@@ -302,7 +302,7 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
               <div class="flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-on-surface-variant">
                 <span class="flex items-center gap-1.5">
                   <span class="material-symbols-outlined text-[13px] text-primary/60">location_on</span>
-                  6500 Baja, Hársfa utca 25.
+                  <?php echo esc_html( chili_field( 'cim', '6500 Baja, Hársfa utca 25.' ) ); ?>
                 </span>
               </div>
             </div>
@@ -311,20 +311,25 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
 
         <!-- Kapcsolat strip -->
         <div class="fade-up delay-3 flex flex-col sm:flex-row gap-3 pt-2">
-          <a href="tel:+36304980690"
+          <?php
+          $tel   = chili_field( 'telefon', '+36 30 498 0690' );
+          $email = chili_field( 'email',   'chillibaja@gmail.com' );
+          $tel_href = 'tel:+' . preg_replace( '/[^0-9]/', '', $tel );
+          ?>
+          <a href="<?php echo esc_attr( $tel_href ); ?>"
              class="flex items-center gap-3 flex-1 px-5 py-3.5 rounded-xl bg-surface-container border border-outline-variant/15 hover:border-primary/25 transition-colors duration-150">
             <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings:'FILL' 1">call</span>
             <div>
               <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant">Telefon</p>
-              <p class="text-on-surface text-[13px] font-bold">+36 30 498 0690</p>
+              <p class="text-on-surface text-[13px] font-bold"><?php echo esc_html( $tel ); ?></p>
             </div>
           </a>
-          <a href="mailto:chillibaja@gmail.com"
+          <a href="mailto:<?php echo esc_attr( $email ); ?>"
              class="flex items-center gap-3 flex-1 px-5 py-3.5 rounded-xl bg-surface-container border border-outline-variant/15 hover:border-primary/25 transition-colors duration-150">
             <span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings:'FILL' 1">mail</span>
             <div>
               <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant">E-mail</p>
-              <p class="text-on-surface text-[13px] font-bold">chillibaja@gmail.com</p>
+              <p class="text-on-surface text-[13px] font-bold"><?php echo esc_html( $email ); ?></p>
             </div>
           </a>
         </div>
