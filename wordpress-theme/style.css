@@ -221,10 +221,14 @@ body {
   color: #ff5722 !important;
 }
 
-/* ── Termék kép fehér háttér eltávolítása ── */
+/* ── Termék kép háttér ── */
+.woocommerce div.product div.images .woocommerce-product-gallery__image {
+  background: #1c1b1b !important;
+  border-radius: 12px;
+  overflow: hidden;
+}
 .woocommerce div.product div.images .woocommerce-product-gallery__image img {
-  mix-blend-mode: multiply;
-  background: transparent;
+  background: #1c1b1b !important;
 }
 
 /* ── WooCommerce termékoldal kép mérete ── */
