@@ -1,0 +1,238 @@
+/*
+Theme Name: Chili Baja
+Theme URI: https://chilibaja.hu
+Author: Chili Baja
+Description: Egyedi WordPress téma a Chili Baja webshophoz – kézműves chili szószok és fűszerkeverékek.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+Text Domain: chili-baja
+Tags: dark, woocommerce, custom
+*/
+
+/* ── Alap design tokenek és közös stílusok ── */
+
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  color-scheme: dark;
+  --ease-out: cubic-bezier(0.23,1,0.32,1);
+  --ease-drawer: cubic-bezier(0.32,0.72,0,1);
+}
+
+body {
+  background-color: #131313;
+  color: #f5ede8;
+  font-family: 'Work Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Hero line entry animáció ── */
+.hero-line {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s cubic-bezier(0.23,1,0.32,1),
+              transform 0.6s cubic-bezier(0.23,1,0.32,1);
+}
+@starting-style {
+  .hero-line { opacity: 0; transform: translateY(18px); }
+}
+.hero-line:nth-child(1) { transition-delay: 0.05s; }
+.hero-line:nth-child(2) { transition-delay: 0.13s; }
+.hero-line:nth-child(3) { transition-delay: 0.21s; }
+.hero-line:nth-child(4) { transition-delay: 0.29s; }
+
+/* ── Scroll caret bounce ── */
+@keyframes caret-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0);   opacity: 0.7; }
+  50%       { transform: translateX(-50%) translateY(7px); opacity: 0.3; }
+}
+#scroll-caret {
+  animation: caret-bounce 2.2s ease-in-out infinite;
+}
+
+/* ── Noise overlay ── */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 15;
+  opacity: 0.6;
+}
+
+/* ── Nav CTA gomb press feedback ── */
+#nav-cta {
+  transition: transform 160ms cubic-bezier(0.23,1,0.32,1), filter 160ms ease;
+}
+#nav-cta:active { transform: scale(0.97); }
+
+/* ── Glow effektek ── */
+.ember-glow {
+  box-shadow: 0 8px 32px rgba(255,87,34,0.1), 0 2px 8px rgba(0,0,0,0.35);
+}
+.ember-glow-strong {
+  box-shadow: 0 12px 48px rgba(255,87,34,0.2), 0 4px 16px rgba(0,0,0,0.5);
+}
+.inner-rim {
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.05), inset -1px -1px 0 rgba(0,0,0,0.15);
+}
+.gradient-fire {
+  background: linear-gradient(135deg, #ff5722 0%, #ff8a65 100%);
+}
+
+/* ── Material Icons ── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+  user-select: none;
+}
+
+/* ── Sticky header ── */
+#site-header {
+  transition: box-shadow 0.25s var(--ease-out), background 0.25s var(--ease-out);
+}
+#site-header.scrolled {
+  box-shadow: 0 1px 32px rgba(0,0,0,0.5);
+}
+
+/* ── Mobil nav ── */
+#mobile-menu {
+  transition: opacity 0.18s var(--ease-out), transform 0.22s var(--ease-out);
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+#mobile-menu.open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ── Fade-up reveal ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up.delay-1 { transition-delay: 0.07s; }
+.fade-up.delay-2 { transition-delay: 0.14s; }
+.fade-up.delay-3 { transition-delay: 0.21s; }
+
+/* ── Animációk ── */
+@keyframes ember-pulse {
+  0%, 100% { opacity: 0.18; transform: scale(1); }
+  50%       { opacity: 0.32; transform: scale(1.08); }
+}
+@keyframes spark-rise {
+  0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0.9; }
+  60%  { opacity: 0.6; }
+  100% { transform: translateY(-110px) translateX(var(--drift)) scale(0.3); opacity: 0; }
+}
+@keyframes fire-line-grow {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+#hero-img {
+  will-change: transform;
+  transform: scale(1.05) translateY(0px);
+}
+#hero-glow {
+  animation: ember-pulse 4s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+.spark {
+  position: absolute;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffb347 0%, #ff5722 60%, transparent 100%);
+  animation: spark-rise var(--dur) ease-out var(--delay) infinite;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+#hero-fire-line {
+  transform-origin: left center;
+  animation: fire-line-grow 0.9s cubic-bezier(0.22,1,0.36,1) 0.55s both;
+}
+#hero-badge {
+  background: linear-gradient(90deg,
+    rgba(255,87,34,0.12) 0%,
+    rgba(255,181,160,0.28) 40%,
+    rgba(255,87,34,0.12) 80%
+  );
+  background-size: 200% auto;
+  animation: shimmer 3.5s linear infinite;
+  border: 1px solid rgba(255,87,34,0.25);
+}
+
+/* ── WooCommerce alap overrides ── */
+.woocommerce .products {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+.woocommerce ul.products li.product {
+  background: #1c1b1b;
+  border: 1px solid rgba(91,64,57,0.25);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+  margin: 0 !important;
+  float: none !important;
+  width: 100% !important;
+}
+.woocommerce ul.products li.product:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 48px rgba(255,87,34,0.15);
+}
+.woocommerce ul.products li.product a img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+  font-family: 'Literata', serif;
+  color: #f5ede8;
+  font-size: 1.1rem;
+  padding: 0.75rem 1rem 0.25rem;
+}
+.woocommerce ul.products li.product .price {
+  color: #ff8a65;
+  font-weight: 700;
+  padding: 0 1rem 0.5rem;
+}
+.woocommerce ul.products li.product .button {
+  display: block;
+  margin: 0 1rem 1rem;
+  background: linear-gradient(135deg, #ff5722 0%, #ff8a65 100%);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+.woocommerce ul.products li.product .button:hover { opacity: 0.85; }
+
+/* Kosár, checkout stílusok */
+.woocommerce-cart table.cart,
+.woocommerce-checkout form.checkout {
+  color: #f5ede8;
+}
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce a.button {
+  background: linear-gradient(135deg, #ff5722 0%, #ff8a65 100%) !important;
+  color: #fff !important;
+  border-radius: 0.5rem !important;
+  font-weight: 600 !important;
+}
