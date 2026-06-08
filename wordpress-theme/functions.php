@@ -135,6 +135,10 @@ tailwind.config = {
     }
 } );
 
+// WooCommerce oldalsáv kikapcsolása
+add_filter( 'woocommerce_sidebar', '__return_false' );
+remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
+
 // Nav menü regisztráció
 add_action( 'after_setup_theme', function() {
     register_nav_menus( [
