@@ -69,5 +69,24 @@
 </footer>
 
 <?php wp_footer(); ?>
+<script>
+// Értesítések automatikus eltüntetése 4 másodperc után
+function chiliAutoHideNotices() {
+  const notices = document.querySelectorAll('.woocommerce-notices-wrapper');
+  notices.forEach(function(notice) {
+    setTimeout(function() {
+      notice.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      notice.style.opacity = '0';
+      notice.style.transform = 'translateX(-50%) translateY(20px)';
+      setTimeout(function() { notice.style.display = 'none'; }, 500);
+    }, 4000);
+  });
+}
+document.addEventListener('DOMContentLoaded', chiliAutoHideNotices);
+// AJAX kosárba rakás utáni értesítésekre is
+jQuery(document.body).on('added_to_cart', function() {
+  setTimeout(chiliAutoHideNotices, 100);
+});
+</script>
 </body>
 </html>
