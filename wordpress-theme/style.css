@@ -231,6 +231,26 @@ body {
   background: #1c1b1b !important;
 }
 
+/* ── WooCommerce variáció dropdown ── */
+.woocommerce div.product .variations select,
+.woocommerce div.product form.cart .variations select {
+  background-color: #1c1b1b !important;
+  color: #e5e2e1 !important;
+  border: 1px solid #5b4039 !important;
+  border-radius: 8px !important;
+  padding: 8px 12px !important;
+  font-size: 14px !important;
+  appearance: auto !important;
+}
+.woocommerce div.product .variations select option {
+  background-color: #1c1b1b !important;
+  color: #e5e2e1 !important;
+}
+.woocommerce div.product .variations label {
+  color: #e5e2e1 !important;
+  font-weight: 600 !important;
+}
+
 /* ── WooCommerce termékoldal layout ── */
 .woocommerce div.product,
 .woocommerce-page div.product {
