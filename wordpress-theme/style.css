@@ -185,29 +185,46 @@ body {
 }
 
 /* ── WooCommerce értesítések (notices) ── */
-.woocommerce-notices-wrapper,
+.woocommerce-notices-wrapper {
+  position: fixed !important;
+  bottom: 24px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 9999 !important;
+  width: auto !important;
+  max-width: 480px !important;
+  min-width: 300px !important;
+}
 .woocommerce-message,
 .woocommerce-info,
 .woocommerce-error {
   background: #1c1b1b !important;
   color: #e5e2e1 !important;
   border-top: 3px solid #ff5722 !important;
-  border-radius: 0 !important;
-  padding: 12px 24px !important;
+  border-radius: 12px !important;
+  padding: 14px 20px !important;
   font-size: 14px !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
 }
 .woocommerce-message a.button,
 .woocommerce-message .button {
   background: linear-gradient(135deg, #ff5722 0%, #ff8a65 100%) !important;
   color: #fff !important;
   border-radius: 999px !important;
-  padding: 8px 20px !important;
+  padding: 6px 16px !important;
   font-size: 12px !important;
   border: none !important;
   float: right !important;
+  margin-left: 12px !important;
 }
 .woocommerce-message::before {
   color: #ff5722 !important;
+}
+
+/* ── Termék kép fehér háttér eltávolítása ── */
+.woocommerce div.product div.images .woocommerce-product-gallery__image img {
+  mix-blend-mode: multiply;
+  background: transparent;
 }
 
 /* ── WooCommerce termékoldal kép mérete ── */
