@@ -131,27 +131,92 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
 </section>
 
 <!-- ══════════════════ RÓLUNK ══════════════════ -->
-<section id="rolunk" class="py-20 bg-[#0e0e0e]">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-      <div>
-        <p class="text-xs font-semibold uppercase tracking-widest text-[#5b4039] mb-3">A mi történetünk</p>
-        <h2 class="font-serif text-3xl md:text-4xl font-bold text-[#f5ede8] mb-6">Bajáról, szívvel</h2>
-        <p class="text-[#8a706a] leading-relaxed mb-4">
-          A Chili Baja kézműves üzem a Dél-Alföld szívéből hozza el a chili szerelmeseknek azt a fajta hőt,
-          amire csak a napsütötte bajai nyarak képesek.
-        </p>
-        <p class="text-[#8a706a] leading-relaxed">
-          Termékeinket kis tételben, gondosan válogatott alapanyagokból készítjük — tartósítószer és mesterséges
-          ízfokozó nélkül. Minden üveg egy megismételhetetlen évszak lenyomata.
-        </p>
-      </div>
-      <div class="rounded-2xl overflow-hidden ember-glow-strong">
+<section id="rolunk" class="bg-surface-container-lowest py-28 relative overflow-hidden">
+  <div class="absolute -right-24 top-0 w-[500px] h-[500px] rounded-full pointer-events-none" style="background:rgba(255,181,160,0.04);filter:blur(150px)"></div>
+  <div class="absolute -left-24 bottom-0 w-[500px] h-[500px] rounded-full pointer-events-none" style="background:rgba(164,2,19,0.04);filter:blur(150px)"></div>
+
+  <div class="max-w-[1280px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+    <!-- Bal: kép + 100% badge -->
+    <div class="relative fade-up">
+      <div class="aspect-square rounded-2xl overflow-hidden shadow-2xl"
+           style="box-shadow:inset 1px 1px 0 rgba(255,255,255,0.05),inset -1px -1px 0 rgba(0,0,0,0.15)">
         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/chilik.webp"
-             alt="Chili Baja termékek"
-             class="w-full object-cover aspect-[4/3]" />
+             alt="Friss chili paprikák kézzel válogatva"
+             class="w-full h-full object-cover" loading="lazy" />
+      </div>
+      <div class="absolute -bottom-5 -right-4 md:-right-8 p-6 rounded-2xl border border-primary/15 shadow-2xl max-w-[190px]"
+           style="background:#131313;box-shadow:inset 1px 1px 0 rgba(255,255,255,0.05),inset -1px -1px 0 rgba(0,0,0,0.15)">
+        <span class="text-primary font-extrabold text-[40px] block tracking-tight leading-none mb-1">100%</span>
+        <p class="text-on-surface-variant text-[13px] leading-snug">Helyi termesztésű alapanyagok, közvetlen kistermelőktől.</p>
       </div>
     </div>
+
+    <!-- Jobb: szöveg -->
+    <div class="fade-up delay-1">
+      <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary mb-4">A mi történetünk</p>
+      <h2 class="font-headline-xl text-headline-xl text-on-surface mb-8">A farmtól az asztalig</h2>
+      <div class="space-y-5 font-body-lg text-on-surface-variant max-w-[54ch]">
+        <p>A Chili Baja nem csupán egy márka, hanem egy szenvedélyprojekt, amely a bajai Duna-part napsütötte földjein született. Hiszünk abban, hogy a prémium minőség alapja a tisztelet: a föld, a növény és a vásárló iránt.</p>
+        <p>Minden egyes üveg szósz kis szériás gyártással készül. Kézzel válogatjuk a paprikákat, és hagyományos, lassú érlelési technikákat alkalmazunk, hogy megőrizzük a chilik eredeti ízvilágát.</p>
+      </div>
+      <ul class="mt-8 space-y-4">
+        <li class="flex items-center gap-4 text-on-surface font-body-lg">
+          <span class="material-symbols-outlined text-primary shrink-0" style="font-variation-settings:'FILL' 1">check_circle</span>
+          Tartósítószer-mentes receptúra
+        </li>
+        <li class="flex items-center gap-4 text-on-surface font-body-lg">
+          <span class="material-symbols-outlined text-primary shrink-0" style="font-variation-settings:'FILL' 1">check_circle</span>
+          Tradicionális eljárások
+        </li>
+        <li class="flex items-center gap-4 text-on-surface font-body-lg">
+          <span class="material-symbols-outlined text-primary shrink-0" style="font-variation-settings:'FILL' 1">check_circle</span>
+          Közvetlen kapcsolat a termelőkkel
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ VÉLEMÉNYEK ══════════════════ -->
+<section id="velemenyek" class="py-28 px-6 max-w-[1280px] mx-auto">
+  <div class="text-center mb-16 fade-up">
+    <p class="font-label-caps text-label-caps uppercase tracking-widest text-primary mb-3">Visszajelzések</p>
+    <h2 class="font-headline-xl text-headline-xl text-on-surface text-balance">Akik már megízlelték</h2>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <blockquote class="stagger-item bg-surface-container rounded-2xl p-8 border border-outline-variant/10 flex flex-col">
+      <span class="material-symbols-outlined text-[32px] mb-5 leading-none" style="color:rgba(255,181,160,0.35);font-variation-settings:'FILL' 1">format_quote</span>
+      <p class="font-body-lg text-on-surface-variant italic leading-relaxed flex-1">"A Füstös Fenevad az új kedvencem. Nem csak csíp, hanem tényleg íze is van. Érezni rajta a gondos odafigyelést."</p>
+      <footer class="mt-6 pt-5 border-t border-outline-variant/15">
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-primary">Kovács Gábor</p>
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5">Séf</p>
+      </footer>
+    </blockquote>
+
+    <blockquote class="stagger-item rounded-2xl p-8 flex flex-col relative overflow-hidden"
+                style="background:linear-gradient(150deg,#221512 0%,#1c1b1b 100%);border:1px solid rgba(255,181,160,0.14)">
+      <div class="absolute top-0 right-0 w-36 h-36 rounded-full pointer-events-none" style="background:rgba(255,87,34,0.05);filter:blur(40px)"></div>
+      <span class="material-symbols-outlined text-primary text-[32px] mb-5 leading-none" style="font-variation-settings:'FILL' 1">format_quote</span>
+      <p class="font-body-lg text-on-surface italic leading-relaxed flex-1">"Végre egy magyar chili, ami nem csak a brutális erőről szól, hanem a gasztronómiai élményről is. A Mézes Méreg zseniális!"</p>
+      <footer class="mt-6 pt-5 border-t border-primary/15">
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-primary">Nagy Emese</p>
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5">Food Blogger</p>
+      </footer>
+    </blockquote>
+
+    <blockquote class="stagger-item bg-surface-container rounded-2xl p-8 border border-outline-variant/10 flex flex-col">
+      <span class="material-symbols-outlined text-[32px] mb-5 leading-none" style="color:rgba(255,181,160,0.35);font-variation-settings:'FILL' 1">format_quote</span>
+      <p class="font-body-lg text-on-surface-variant italic leading-relaxed flex-1">"A kiszállítás gyors volt, a csomagolás prémium. A Hajnali Harag tényleg odaver. Azóta is rendszeresen rendelem."</p>
+      <footer class="mt-6 pt-5 border-t border-outline-variant/15">
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-primary">Molnár Péter</p>
+        <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant mt-0.5">Vásárló</p>
+      </footer>
+    </blockquote>
+
   </div>
 </section>
 
@@ -333,6 +398,13 @@ document.querySelectorAll('.fade-up').forEach(el => {
   new IntersectionObserver(([e]) => {
     if (e.isIntersecting) { el.classList.add('visible'); }
   }, { threshold: 0.15 }).observe(el);
+});
+
+// Stagger IntersectionObserver
+document.querySelectorAll('.stagger-item').forEach(el => {
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { el.classList.add('visible'); }
+  }, { threshold: 0.12 }).observe(el);
 });
 
 // Hero parallax
