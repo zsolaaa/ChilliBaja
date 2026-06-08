@@ -64,6 +64,10 @@ add_action( 'wp_enqueue_scripts', function() {
     }
 } );
 
+// WooCommerce termékek száma soronként
+add_filter( 'loop_shop_columns', function() { return 4; } );
+add_filter( 'loop_shop_per_page', function() { return 12; } );
+
 // WooCommerce oldalsáv kikapcsolása
 add_filter( 'woocommerce_sidebar', '__return_false' );
 remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
