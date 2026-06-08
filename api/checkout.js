@@ -58,7 +58,7 @@ module.exports = async (req, res) => {
       payment_method_types: ['card'],
       line_items,
       mode: 'payment',
-      success_url: `${req.headers.origin}/webshop.html?success=true`,
+      success_url: `${req.headers.origin}/success.html`,
       cancel_url: `${req.headers.origin}/webshop.html?canceled=true`,
       locale: 'hu',
       shipping_address_collection: {
