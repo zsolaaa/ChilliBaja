@@ -107,12 +107,12 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
   <?php if ( $products ) : ?>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
     <?php foreach ( $products as $product ) :
-      // Erősség attribútum
+      // Erősség attribútum – csak "erősség" nevű
       $erosseg = '';
       $attributes = $product->get_attributes();
       foreach ( $attributes as $attr ) {
-        $attr_name = strtolower( wc_attribute_label( $attr->get_name() ) );
-        if ( strpos( $attr_name, 'er' ) !== false || strpos( $attr_name, 'strength' ) !== false ) {
+        $attr_name = mb_strtolower( wc_attribute_label( $attr->get_name() ) );
+        if ( $attr_name === 'erősség' || $attr_name === 'erosseg' || $attr_name === 'strength' ) {
           $erosseg = implode( ', ', $attr->get_options() );
           break;
         }
