@@ -1460,6 +1460,31 @@ updateCartUI();
     openDetail(hash);
   }
 })();
+
+// Stripe sikeres fizetés után kosár ürítése
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('success') === 'true') {
+    saveCart({});
+    updateCartUI();
+    renderGrid('all');
+    // Visszaigazoló üzenet megjelenítése
+    var confirm = document.getElementById('confirm-view');
+    var shop = document.getElementById('shop-view');
+    if (confirm && shop) {
+      shop.classList.remove('active');
+      document.getElementById('detail-view').style.display = 'none';
+      document.getElementById('checkout-view').style.display = 'none';
+      confirm.style.display = 'block';
+      document.getElementById('breadcrumb-label').textContent = 'Visszaigazolás';
+    }
+    // URL tisztítása
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+  if (params.get('canceled') === 'true') {
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+})();
 </script>
 </body>
 </html>
