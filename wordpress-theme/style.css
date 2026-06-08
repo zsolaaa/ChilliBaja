@@ -25,6 +25,21 @@ body {
   overflow-x: hidden;
 }
 
+/* ── Mobil hero ── */
+@media (max-width: 640px) {
+  #hero-badge span {
+    white-space: nowrap !important;
+    font-size: 9px !important;
+  }
+  .text-display-lg-mobile {
+    font-size: 28px !important;
+    line-height: 1.15 !important;
+  }
+  .md\:text-display-lg {
+    font-size: 28px !important;
+  }
+}
+
 /* ── Hero line entry animáció ── */
 .hero-line {
   opacity: 1;
