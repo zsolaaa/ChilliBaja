@@ -319,6 +319,21 @@ body {
   margin: 0 !important;
   float: none !important;
   width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+.woocommerce ul.products li.product .woocommerce-loop-product__link {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+.woocommerce ul.products li.product a img {
+  width: 100% !important;
+  aspect-ratio: 1/1 !important;
+  object-fit: cover !important;
+}
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+  flex: 1 !important;
 }
 .woocommerce ul.products li.product:hover {
   transform: translateY(-4px);
