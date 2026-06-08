@@ -302,13 +302,28 @@ body {
 }
 
 /* ── WooCommerce alap overrides ── */
-.woocommerce .products {
+.woocommerce .products,
+.woocommerce-page .products,
+.woocommerce ul.products,
+.woocommerce-page ul.products {
   display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 1.5rem !important;
   margin: 0 !important;
   padding: 0 !important;
   list-style: none !important;
+}
+@media (max-width: 1024px) {
+  .woocommerce .products,
+  .woocommerce-page .products {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+@media (max-width: 640px) {
+  .woocommerce .products,
+  .woocommerce-page .products {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 .woocommerce ul.products li.product {
   background: #1c1b1b;
