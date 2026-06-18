@@ -3,12 +3,6 @@
  * Chili Baja téma – functions.php
  */
 
-// Navigációs menü regisztrálása
-add_action( 'after_setup_theme', function() {
-    register_nav_menus( [
-        'primary' => 'Főmenü',
-    ] );
-} );
 
 // Desktop nav walker
 class Chili_Nav_Walker extends Walker_Nav_Menu {
