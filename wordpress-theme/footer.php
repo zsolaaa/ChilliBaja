@@ -6,7 +6,12 @@
       <!-- Márka -->
       <div>
         <div class="flex items-center gap-3 mb-4">
-          <?php if ( has_custom_logo() ) : the_custom_logo(); else : ?>
+          <?php if ( has_custom_logo() ) :
+            $logo_id  = get_theme_mod( 'custom_logo' );
+            $logo_url = wp_get_attachment_image_url( $logo_id, 'full' );
+          ?>
+          <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php bloginfo( 'name' ); ?>" style="height:40px;width:auto;object-fit:contain;">
+          <?php else : ?>
           <span class="font-display-lg-mobile text-[15px] font-extrabold text-primary tracking-tight leading-none"><?php bloginfo( 'name' ); ?></span>
           <?php endif; ?>
         </div>

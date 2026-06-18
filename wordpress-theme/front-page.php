@@ -10,10 +10,10 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
   <!-- Háttérkép -->
   <div class="absolute inset-0 -z-10">
     <?php if ( has_post_thumbnail() ) :
-        the_post_thumbnail( 'full', [ 'id' => 'hero-img', 'class' => 'w-full h-full object-cover', 'alt' => '' ] );
+        the_post_thumbnail( 'full', [ 'id' => 'hero-img', 'class' => 'w-full h-full object-cover', 'alt' => 'Kézzel készített chili szósz – ChilliBaja' ] );
     else : ?>
       <img id="hero-img" src="<?php echo get_template_directory_uri(); ?>/assets/images/chilik.webp"
-           class="w-full h-full object-cover" style="will-change:transform;transform:scale(1.05) translateY(0px)" alt="" />
+           class="w-full h-full object-cover" style="will-change:transform;transform:scale(1.05) translateY(0px)" alt="Kézzel készített chili szósz – ChilliBaja" />
     <?php endif; ?>
     <!-- Alsó gradient -->
     <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/55 to-transparent"></div>
@@ -39,8 +39,8 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
   </div>
 
   <!-- Hero szöveg – bal felül -->
-  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-20 md:pt-28">
-  <div class="max-w-xl">
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 pt-28 md:pt-32">
+  <div class="max-w-xl hero-text-box">
 
     <div class="hero-line inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full" id="hero-badge"
          style="background:linear-gradient(90deg,rgba(255,87,34,0.12) 0%,rgba(255,181,160,0.28) 40%,rgba(255,87,34,0.12) 80%);background-size:200% auto;animation:shimmer 3.5s linear infinite;border:1px solid rgba(255,87,34,0.25)">
@@ -59,7 +59,7 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
       <?php echo esc_html( chili_field( 'hero_alcim', 'Kézzel készített prémium chili szószok Bajáról.' ) ); ?>
     </p>
 
-    <div class="hero-line flex flex-row gap-4">
+    <div class="hero-line flex flex-row gap-4 hero-btns">
       <a href="<?php echo esc_url( $shop_url ); ?>"
          class="inline-flex items-center px-8 py-3.5 rounded-full text-white font-label-caps text-label-caps uppercase tracking-widest hover:brightness-110 hover:shadow-[0_0_40px_rgba(255,87,34,0.55)] transition-all duration-150"
          style="background:linear-gradient(135deg,#ff5722 0%,#ff8a65 100%)">
@@ -144,7 +144,7 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
         <span class="absolute top-3 right-3 z-10 font-label-caps text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full text-white" style="background:linear-gradient(135deg,#ff5722,#ff8a65)"><?php echo esc_html( $badge ); ?></span>
         <?php endif; ?>
         <a href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>">
-          <?php echo $product->get_image( 'woocommerce_thumbnail', [ 'class' => 'w-full h-52 object-cover' ] ); ?>
+          <?php echo $product->get_image( 'woocommerce_thumbnail', [ 'class' => 'w-full h-52 object-cover', 'style' => 'background:#1c1b1b' ] ); ?>
         </a>
       </div>
 
@@ -157,7 +157,11 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
         </h3>
 
         <p class="text-on-surface-variant font-body-md text-[13px] mb-4 leading-relaxed flex-1">
-          <?php echo wp_trim_words( $product->get_short_description() ?: $product->get_description(), 12, '…' ); ?>
+          <?php
+            $desc = $product->get_short_description();
+            if ( ! $desc ) $desc = $product->get_description();
+            echo wp_trim_words( wp_strip_all_tags( $desc ), 12, '…' );
+          ?>
         </p>
 
         <?php if ( $erosseg ) : ?>
@@ -181,10 +185,10 @@ $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id(
         <?php endif; ?>
 
         <!-- Ár + gomb -->
-        <div class="flex items-center justify-between mt-auto">
-          <span class="text-on-surface font-bold text-[16px]"><?php echo $product->get_price_html(); ?></span>
+        <div class="flex items-center justify-between gap-3 mt-auto flex-wrap">
+          <span class="text-on-surface font-bold text-[16px] whitespace-nowrap"><?php echo $product->get_price_html(); ?></span>
           <a href="<?php echo esc_url( get_permalink( $product->get_id() ) ); ?>"
-             class="font-label-caps text-[11px] uppercase tracking-widest px-4 py-2 rounded-full border border-primary/25 text-primary hover:bg-primary/10 hover:border-primary/45 transition-colors duration-150">
+             class="font-label-caps text-[11px] uppercase tracking-widest px-4 py-2 rounded-full border border-primary/25 text-primary hover:bg-primary/10 hover:border-primary/45 transition-colors duration-150 whitespace-nowrap">
             Részletek
           </a>
         </div>

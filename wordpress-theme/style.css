@@ -25,7 +25,35 @@ body {
   overflow-x: hidden;
 }
 
+/* ── Hero alcím olvashatóság ── */
+.hero-text-box p {
+  color: #f0e6e0 !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.8), 0 2px 20px rgba(0,0,0,0.6) !important;
+}
+
+/* ── Desktop hero szöveg pozíció ── */
+@media (min-width: 769px) {
+  .hero-text-box {
+    padding-top: 80px !important;
+  }
+}
+
 /* ── Mobil hero ── */
+@media (max-width: 768px) {
+  .hero-text-box {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    text-align: left !important;
+    padding-top: 25vh !important;
+  }
+  .hero-btns {
+    justify-content: flex-start !important;
+  }
+  #hero-fire-line {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+}
 @media (max-width: 640px) {
   #hero-badge span {
     white-space: nowrap !important;
@@ -33,12 +61,16 @@ body {
   }
   .text-display-lg-mobile,
   .font-display-lg-mobile {
-    font-size: 24px !important;
+    font-size: 36px !important;
     line-height: 1.15 !important;
   }
   h1.hero-line {
-    font-size: 24px !important;
+    font-size: 36px !important;
     line-height: 1.2 !important;
+  }
+  .hero-text-box p {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
   }
 }
 
@@ -116,6 +148,35 @@ body {
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
   user-select: none;
+}
+
+/* ── Custom logó méret ── */
+.custom-logo {
+  height: 40px !important;
+  width: auto !important;
+  max-width: 140px !important;
+  object-fit: contain !important;
+}
+.custom-logo-link {
+  display: flex !important;
+  align-items: center !important;
+}
+/* Header border eltüntetése */
+#site-header {
+  border-bottom: none !important;
+}
+@media (max-width: 768px) {
+  .custom-logo {
+    height: 32px !important;
+  }
+  .custom-logo-link {
+    margin-right: auto !important;
+    justify-content: flex-start !important;
+  }
+  #site-header nav > a:first-child {
+    flex: 0 0 auto !important;
+    margin-right: auto !important;
+  }
 }
 
 /* ── Sticky header ── */
@@ -236,6 +297,12 @@ body {
 }
 .woocommerce-message::before {
   color: #ff5722 !important;
+}
+
+/* ── Kiemelt termék kártyák képháttér ── */
+.chili-featured-img,
+article .w-full.h-52 {
+  background: #1c1b1b !important;
 }
 
 /* ── Termék kép háttér ── */
@@ -360,6 +427,7 @@ body {
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: cover;
+  background: #1c1b1b !important;
 }
 .woocommerce ul.products li.product .woocommerce-loop-product__title {
   font-family: 'Literata', serif;
@@ -414,6 +482,35 @@ body {
   .upsells.products ul.products {
     grid-template-columns: repeat(2, 1fr) !important;
   }
+  .related.products,
+  .upsells.products {
+    display: block !important;
+    width: 100% !important;
+  }
+}
+
+/* ── WooCommerce quantity input ── */
+.woocommerce div.product form.cart .quantity input.qty,
+.woocommerce .quantity input.qty {
+  background-color: #1c1b1b !important;
+  color: #e5e2e1 !important;
+  border: 1px solid #5b4039 !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  text-align: center !important;
+  width: 60px !important;
+  height: 44px !important;
+  -moz-appearance: textfield !important;
+}
+.woocommerce .quantity input.qty::-webkit-inner-spin-button,
+.woocommerce .quantity input.qty::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+.woocommerce .quantity input.qty:focus {
+  outline: none !important;
+  border-color: #ff5722 !important;
+  box-shadow: 0 0 0 2px rgba(255,87,34,0.2) !important;
 }
 
 /* Kosár, checkout stílusok */
@@ -426,6 +523,90 @@ body {
 .woocommerce a.button {
   background: linear-gradient(135deg, #ff5722 0%, #ff8a65 100%) !important;
   color: #fff !important;
-  border-radius: 0.5rem !important;
+  border-radius: 9999px !important;
   font-weight: 600 !important;
+  padding: 0.75rem 2rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  font-size: 0.75rem !important;
+  border: none !important;
+  transition: filter 150ms ease, box-shadow 150ms ease !important;
+}
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce a.button:hover {
+  filter: brightness(1.1) !important;
+  box-shadow: 0 0 24px rgba(255,87,34,0.4) !important;
+}
+
+/* Single product kép háttér */
+.woocommerce div.product div.images img {
+  background: transparent !important;
+}
+.woocommerce div.product div.images .woocommerce-product-gallery {
+  background: #201f1f !important;
+  border-radius: 1rem !important;
+  padding: 1.5rem !important;
+}
+
+/* Webshop archive description üres div eltüntetése */
+.woocommerce .woocommerce-products-header,
+.woocommerce .term-description,
+.woocommerce .page-description {
+  display: none !important;
+}
+
+/* Terméklista grid – egyforma kártyamagasság */
+.woocommerce ul.products {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 1.5rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  justify-items: stretch !important;
+}
+@media (min-width: 768px) {
+  .woocommerce ul.products {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+@media (min-width: 1024px) {
+  .woocommerce ul.products {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+.woocommerce ul.products li.product {
+  margin: 0 !important;
+  float: none !important;
+  width: auto !important;
+}
+.woocommerce ul.products::before,
+.woocommerce ul.products::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Result count + ordering sor marginja */
+.woocommerce .woocommerce-ordering,
+.woocommerce .woocommerce-result-count {
+  margin-bottom: 0.5rem !important;
+}
+
+/* Breadcrumb stílus */
+.woocommerce .woocommerce-breadcrumb {
+  color: #8a706a !important;
+  font-size: 0.8rem !important;
+}
+.woocommerce .woocommerce-breadcrumb a {
+  color: #ff5722 !important;
+}
+
+/* Variáció dropdown */
+.woocommerce div.product .variations select {
+  background: #201f1f !important;
+  color: #f5ede8 !important;
+  border: 1px solid rgba(255,87,34,0.25) !important;
+  border-radius: 0.5rem !important;
+  padding: 0.5rem 1rem !important;
 }
