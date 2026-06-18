@@ -539,6 +539,34 @@ article .w-full.h-52 {
   box-shadow: 0 0 24px rgba(255,87,34,0.4) !important;
 }
 
+/* Product gallery – thumbnail sor vízszintesen */
+ol.flex-control-nav.flex-control-thumbs {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  gap: 0.5rem !important;
+  margin-top: 0.75rem !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+ol.flex-control-nav.flex-control-thumbs li {
+  width: 70px !important;
+  float: none !important;
+  margin: 0 !important;
+}
+ol.flex-control-nav.flex-control-thumbs li img {
+  border-radius: 0.5rem !important;
+  border: 2px solid transparent !important;
+  transition: border-color 150ms ease !important;
+  object-fit: cover !important;
+  width: 70px !important;
+  height: 70px !important;
+}
+ol.flex-control-nav.flex-control-thumbs li img.flex-active,
+ol.flex-control-nav.flex-control-thumbs li img:hover {
+  border-color: #ff5722 !important;
+}
+
 /* Single product kép háttér */
 .woocommerce div.product div.images img {
   background: transparent !important;
@@ -609,4 +637,56 @@ article .w-full.h-52 {
   border: 1px solid rgba(255,87,34,0.25) !important;
   border-radius: 0.5rem !important;
   padding: 0.5rem 1rem !important;
+}
+
+/* Mennyiség + kosár spacing */
+.woocommerce div.product form.cart {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+}
+.woocommerce div.product form.cart .quantity {
+  margin: 0 !important;
+}
+
+/* +/- gombos mennyiség */
+.chili-qty-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid rgba(255,87,34,0.25);
+  border-radius: 9999px;
+  overflow: hidden;
+  background: #201f1f;
+}
+.chili-qty-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #ff5722;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.chili-qty-btn:hover {
+  background: rgba(255,87,34,0.15);
+}
+.chili-qty-wrapper input.qty {
+  width: 3rem !important;
+  text-align: center !important;
+  background: transparent !important;
+  border: none !important;
+  border-left: 1px solid rgba(255,87,34,0.15) !important;
+  border-right: 1px solid rgba(255,87,34,0.15) !important;
+  border-radius: 0 !important;
+  color: #f5ede8 !important;
+  font-weight: 600 !important;
+  padding: 0 !important;
+  height: 2.5rem !important;
+  box-shadow: none !important;
 }

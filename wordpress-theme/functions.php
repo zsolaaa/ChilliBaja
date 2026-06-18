@@ -77,6 +77,44 @@ add_action( 'wp_enqueue_scripts', function() {
         );
     }
 
+    // Mennyiség +/- gombok JS (termékoldalakon)
+    if ( is_singular( 'product' ) ) {
+        wp_add_inline_script( 'wc-add-to-cart-variation', '
+        document.addEventListener("DOMContentLoaded", function() {
+            function initQty() {
+                document.querySelectorAll(".quantity").forEach(function(wrapper) {
+                    if (wrapper.querySelector(".chili-qty-btn")) return;
+                    var input = wrapper.querySelector("input.qty");
+                    if (!input) return;
+                    wrapper.classList.add("chili-qty-wrapper");
+                    var minus = document.createElement("button");
+                    minus.type = "button";
+                    minus.className = "chili-qty-btn";
+                    minus.textContent = "−";
+                    minus.addEventListener("click", function() {
+                        var val = parseInt(input.value) || 1;
+                        var min = parseInt(input.getAttribute("min")) || 1;
+                        if (val > min) { input.value = val - 1; input.dispatchEvent(new Event("change")); }
+                    });
+                    var plus = document.createElement("button");
+                    plus.type = "button";
+                    plus.className = "chili-qty-btn";
+                    plus.textContent = "+";
+                    plus.addEventListener("click", function() {
+                        var val = parseInt(input.value) || 1;
+                        var max = parseInt(input.getAttribute("max")) || 9999;
+                        if (val < max) { input.value = val + 1; input.dispatchEvent(new Event("change")); }
+                    });
+                    wrapper.insertBefore(minus, input);
+                    wrapper.appendChild(plus);
+                });
+            }
+            initQty();
+            document.body.addEventListener("wc_variation_form", initQty);
+        });
+        ' );
+    }
+
     // WooCommerce shop JS
     if ( is_shop() || is_product_category() || is_product() ) {
         wp_enqueue_script(
