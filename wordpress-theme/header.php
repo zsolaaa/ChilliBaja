@@ -13,10 +13,10 @@
 <!-- ══════════════════ HEADER ══════════════════ -->
 <header id="site-header" class="fixed top-0 w-full z-50 border-b border-outline-variant/20">
   <div class="absolute inset-0 bg-surface/95 backdrop-blur-md pointer-events-none -z-10" aria-hidden="true"></div>
-  <nav class="flex items-center justify-between px-6 py-4 max-w-[1280px] mx-auto">
+  <nav class="flex items-center justify-between px-4 max-w-[1280px] mx-auto" style="min-height:64px">
 
     <!-- Logó bal -->
-    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 shrink-0">
+    <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3 shrink-0 mr-auto md:mr-0">
       <?php if ( has_custom_logo() ) : the_custom_logo(); else : ?>
         <span class="font-display-lg-mobile text-[15px] md:text-[21px] font-extrabold text-primary tracking-tight leading-none">
           <?php bloginfo( 'name' ); ?>
@@ -25,25 +25,31 @@
     </a>
 
     <!-- Desktop navigáció – középen -->
+    <?php
+    $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id( 'shop' ) ) : home_url( '/webshop' );
+    if ( has_nav_menu( 'primary' ) ) :
+      wp_nav_menu( [
+        'theme_location' => 'primary',
+        'container'      => false,
+        'menu_class'     => 'hidden md:flex items-center gap-8 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant',
+        'link_class'     => 'hover:text-primary transition-colors duration-150',
+        'walker'         => new Chili_Nav_Walker(),
+      ] );
+    else :
+    ?>
     <ul class="hidden md:flex items-center gap-8 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
       <?php
-      $shop_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id( 'shop' ) ) : home_url( '/webshop' );
       $links = [
         'Kollekció' => $shop_url,
         'Rólunk'    => home_url( '/#rolunk' ),
         'Vélemények'=> home_url( '/#velemenyek' ),
         'Helyszínek'=> home_url( '/#helyszinek' ),
       ];
-      foreach ( $links as $label => $url ) :
-      ?>
-        <li>
-          <a href="<?php echo esc_url( $url ); ?>"
-             class="hover:text-primary transition-colors duration-150">
-            <?php echo esc_html( $label ); ?>
-          </a>
-        </li>
+      foreach ( $links as $label => $url ) : ?>
+        <li><a href="<?php echo esc_url( $url ); ?>" class="hover:text-primary transition-colors duration-150"><?php echo esc_html( $label ); ?></a></li>
       <?php endforeach; ?>
     </ul>
+    <?php endif; ?>
 
     <!-- Jobb: kosár + CTA -->
     <div class="hidden md:flex items-center gap-4">
@@ -90,12 +96,26 @@
   <div id="mobile-menu"
        class="md:hidden absolute top-full left-0 right-0 bg-surface-container-low border-b border-outline-variant/20 px-6 py-5 flex flex-col gap-1"
        aria-hidden="true">
-    <?php foreach ( $links as $label => $url ) : ?>
-    <a href="<?php echo esc_url( $url ); ?>"
-       class="mob-link block font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors py-2">
-      <?php echo esc_html( $label ); ?>
-    </a>
-    <?php endforeach; ?>
+    <?php if ( has_nav_menu( 'primary' ) ) :
+      wp_nav_menu( [
+        'theme_location' => 'primary',
+        'container'      => false,
+        'menu_class'     => 'flex flex-col gap-1',
+        'walker'         => new Chili_Mobile_Nav_Walker(),
+      ] );
+    else :
+      $links = [
+        'Kollekció' => $shop_url,
+        'Rólunk'    => home_url( '/#rolunk' ),
+        'Vélemények'=> home_url( '/#velemenyek' ),
+        'Helyszínek'=> home_url( '/#helyszinek' ),
+      ];
+      foreach ( $links as $label => $url ) : ?>
+      <a href="<?php echo esc_url( $url ); ?>"
+         class="mob-link block font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors py-2">
+        <?php echo esc_html( $label ); ?>
+      </a>
+    <?php endforeach; endif; ?>
     <a href="<?php echo esc_url( $shop_url ); ?>"
        class="inline-flex mt-2 px-8 py-3 rounded-full bg-primary-container text-white font-label-caps text-label-caps uppercase tracking-widest text-center justify-center">
       Vásárlás

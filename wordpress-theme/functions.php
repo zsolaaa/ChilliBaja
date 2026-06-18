@@ -3,9 +3,40 @@
  * Chili Baja téma – functions.php
  */
 
+// Navigációs menü regisztrálása
+add_action( 'after_setup_theme', function() {
+    register_nav_menus( [
+        'primary' => 'Főmenü',
+    ] );
+} );
+
+// Desktop nav walker
+class Chili_Nav_Walker extends Walker_Nav_Menu {
+    function start_el( &$output, $data_object, $depth = 0, $args = null, $current_object_id = 0 ) {
+        $url   = $data_object->url;
+        $title = $data_object->title;
+        $output .= '<li><a href="' . esc_url( $url ) . '" class="hover:text-primary transition-colors duration-150">' . esc_html( $title ) . '</a></li>';
+    }
+}
+
+// Mobil nav walker
+class Chili_Mobile_Nav_Walker extends Walker_Nav_Menu {
+    function start_el( &$output, $data_object, $depth = 0, $args = null, $current_object_id = 0 ) {
+        $url   = $data_object->url;
+        $title = $data_object->title;
+        $output .= '<a href="' . esc_url( $url ) . '" class="mob-link block font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors py-2">' . esc_html( $title ) . '</a>';
+    }
+}
+
 // WooCommerce támogatás bejelentése
 add_action( 'after_setup_theme', function() {
     add_theme_support( 'woocommerce' );
+    add_theme_support( 'custom-logo', [
+        'height'      => 80,
+        'width'       => 200,
+        'flex-height' => true,
+        'flex-width'  => true,
+    ] );
     add_theme_support( 'wc-product-gallery-zoom' );
     add_theme_support( 'wc-product-gallery-lightbox' );
     add_theme_support( 'wc-product-gallery-slider' );
